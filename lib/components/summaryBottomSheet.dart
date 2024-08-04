@@ -1,13 +1,16 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class SummaryBottomSheet extends StatefulWidget {
   const SummaryBottomSheet({
     super.key,
-    required this.summary,
+    required this.paperData,
+    required this.parseAndLaunchURL,
   });
 
-  final String summary;
+  final dynamic paperData;
+  final Function parseAndLaunchURL;
 
   @override
   State<SummaryBottomSheet> createState() => _SummaryBottomSheetState();
@@ -35,7 +38,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
               clipBehavior: Clip.hardEdge,
               margin: const EdgeInsets.all(2.0),
               decoration: const BoxDecoration(
-                color: Colors.black,
+                color: Color(0xff121212),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
@@ -62,7 +65,12 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        widget.parseAndLaunchURL(
+                          widget.paperData["id"].toString(),
+                          widget.paperData["title"].toString(),
+                        );
+                      },
                       icon: const Icon(
                         Ionicons.open_outline,
                         color: Colors.white,
@@ -73,7 +81,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.47,
               width: double.infinity,
               child: ListView(
                 children: [
@@ -85,7 +93,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                       bottom: 100.0,
                     ),
                     child: Text(
-                      widget.summary
+                      widget.paperData["summary"]
                           .trim()
                           .replaceAll(RegExp(r'\\n'), ' ')
                           .replaceAll(RegExp(r'\\'), ''),

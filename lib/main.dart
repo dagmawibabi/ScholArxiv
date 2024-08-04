@@ -1,8 +1,14 @@
+import "package:arxiv/models/bookmarks.dart";
 import "package:arxiv/pages/homePage.dart";
 import "package:flutter/material.dart";
+import "package:hive_flutter/hive_flutter.dart";
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(BookmarkAdapter());
+  // await Hive.openBox<Bookmark>("bookmarks");
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -18,13 +24,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
-      routes: {"/": (context) => HomePage()},
+      routes: {"/": (context) => const HomePage()},
       themeMode: ThemeMode.light,
       theme: ThemeData(
         primaryColor: Colors.black,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xff121212),
+          surfaceTintColor: Colors.black,
+          foregroundColor: Colors.white,
           iconTheme: IconThemeData(
             color: Colors.white,
           ),

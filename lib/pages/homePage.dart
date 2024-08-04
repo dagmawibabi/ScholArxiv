@@ -1,19 +1,19 @@
+// ignore_for_file: file_names
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:arxiv/components/eachPaperCard.dart';
 import 'package:arxiv/components/loadingIndicator.dart';
-import 'package:arxiv/components/resultsLabel.dart';
 import 'package:arxiv/components/searchBox.dart';
-import 'package:arxiv/components/summaryBottomSheet.dart';
+import 'package:arxiv/pages/bookmarksPage.dart';
 import 'package:arxiv/pages/pdfViewer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml2json/xml2json.dart';
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +25,48 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var arxivBaseURL = "http://export.arxiv.org/api/query?search_query=all:";
+  int startPagination = 0;
+  int endPagination = 30;
+  int paginationGap = 30;
   var arxivBaseLimitURL = "&start=0&max_results=30";
   var pdfBaseURL = "https://arxiv.org/pdf";
+  List suggestions = [
+    "attention is all you need",
+    "protein measurement",
+    "relativity",
+    "mathematical theory of communication",
+    "molecular cloning",
+    "dna sequencing",
+    "mental state",
+    "fuzzy sets",
+    "atheory of justice",
+    "tiered reward",
+    "neural network",
+    "quantum",
+    "emotional",
+    "behavioural",
+    "spiritual",
+    "machine learning",
+    "entanglement",
+    "computer",
+    "robotics",
+    "books",
+    "reading",
+    "higgs boson",
+    "black hole",
+    "planet",
+    "rocket",
+    "hands",
+    "brain",
+    "acid",
+    "identity",
+    "psychology",
+    "cats",
+    "spider",
+    "dog",
+    "fear",
+  ];
+
   var isHomeScreenLoading = true;
   TextEditingController searchTermController = TextEditingController();
 
@@ -34,7 +74,12 @@ class _HomePageState extends State<HomePage> {
   final xml2json = Xml2Json();
   List data = [];
 
-  void search() async {
+  Future<void> search({bool? resetPagination}) async {
+    if (resetPagination == true) {
+      startPagination = 0;
+      endPagination = paginationGap;
+    }
+    arxivBaseLimitURL = "&start=$startPagination&max_results=$endPagination";
     isHomeScreenLoading = true;
     data = [];
     setState(() {});
@@ -42,15 +87,26 @@ class _HomePageState extends State<HomePage> {
     Response result;
     var searchTerm = searchTermController.text.toString().trim();
     if (searchTerm == "" || searchTerm == " ") {
-      result = await dio
-          .get("${arxivBaseURL}attention is all you need$arxivBaseLimitURL");
+      Random random = Random();
+      int randomIndex = random.nextInt(suggestions.length);
+      String randomItem = suggestions[randomIndex];
+      int pageJump = random.nextInt(3) + random.nextInt(2);
+      startPagination += paginationGap * pageJump;
+      endPagination += paginationGap * pageJump;
+
+      result = await dio.get("$arxivBaseURL$randomItem$arxivBaseLimitURL");
     } else {
       result = await dio.get("$arxivBaseURL$searchTerm$arxivBaseLimitURL");
     }
     xml2json.parse(result.data);
     var jsonString = xml2json.toParker();
     var jsonObject = await json.decode(jsonString);
-    data = jsonObject["feed"]["entry"];
+
+    try {
+      data = jsonObject["feed"]["entry"];
+    } catch (e) {
+      data = [];
+    }
 
     isHomeScreenLoading = false;
     setState(() {});
@@ -59,6 +115,7 @@ class _HomePageState extends State<HomePage> {
   var paperTitle = "";
   var savePath = "";
   var pdfURL = "";
+  dynamic downloadPath = "";
 
   Future<void> parseAndLaunchURL(String currentURL, String title) async {
     paperTitle = title;
@@ -77,17 +134,13 @@ class _HomePageState extends State<HomePage> {
     final Uri parsedURL = Uri.parse(pdfURL);
     savePath = '${(await getTemporaryDirectory()).path}/paper3.pdf';
 
-    print("=======================");
-    print(savePath);
-    print(parsedURL);
-    print("=======================");
-
     if (urlType == 2) {
       var result = await dio.downloadUri(parsedURL, savePath);
       if (result.statusCode != 200) {}
     }
 
     Navigator.push(
+      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(
         builder: (context) => PDFViewer(
@@ -95,25 +148,37 @@ class _HomePageState extends State<HomePage> {
           savePath: savePath,
           pdfURL: pdfURL,
           urlType: urlType,
+          downloadPaper: downloadPaper,
         ),
       ),
     );
     setState(() {});
   }
 
-  void showSummary(String summary) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SummaryBottomSheet(
-        summary: summary,
-      ),
-    );
+  void downloadPaper(String paperURL) async {
+    var splitURL = paperURL.split("/");
+    var id = splitURL[splitURL.length - 1];
+    var selectedURL = "";
+    if (id.contains(".") == true) {
+      selectedURL = "$pdfBaseURL/$id";
+    } else {
+      selectedURL = "$pdfBaseURL/cond-mat/$id";
+    }
+    await launchUrl(Uri.parse(selectedURL));
+  }
+
+  void askPermissions() async {
+    await Permission.accessMediaLocation.request();
+    await Permission.manageExternalStorage.request();
+    await Permission.mediaLibrary.request();
+    await Permission.storage.request();
   }
 
   @override
   void initState() {
     super.initState();
     search();
+    askPermissions();
   }
 
   @override
@@ -122,14 +187,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
           "ScholArxiv",
-          style: TextStyle(
-            color: Colors.white,
-          ),
         ),
-        backgroundColor: Colors.black,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookmarksPage(
+                    downloadPaper: downloadPaper,
+                    parseAndLaunchURL: parseAndLaunchURL,
+                  ),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.bookmark_border_outlined,
             ),
@@ -137,184 +208,99 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: ListView(
-        children: [
-          // Search Box
-          SearchBox(
+      body: LiquidPullToRefresh(
+        onRefresh: search,
+        backgroundColor: Colors.white,
+        color: const Color(0xff121212),
+        animSpeedFactor: 2.0,
+        child: ListView(
+          children: [
+            // Search Box
+            SearchBox(
               searchTermController: searchTermController,
-              searchFunction: search),
+              searchFunction: search,
+            ),
 
-          // Results Label
-          const ResultLabel(),
+            // Results Label
+            // const ResultLabel(),
 
-          // Data or Loading
-          isHomeScreenLoading == true
-              ? const LoadingIndicator()
-              : Column(
-                  children: data.map(
-                    (eachPaper) {
-                      return Container(
-                        margin: const EdgeInsets.only(
-                          left: 10.0,
-                          right: 10.0,
-                          bottom: 10.0,
+            // Data or Loading
+            isHomeScreenLoading == true
+                ? const LoadingIndicator(
+                    topPadding: 200.0,
+                  )
+                : data.isNotEmpty
+                    ? Column(
+                        children: data.map(
+                          (eachPaper) {
+                            return EachPaperCard(
+                              eachPaper: eachPaper,
+                              downloadPaper: downloadPaper,
+                              parseAndLaunchURL: parseAndLaunchURL,
+                              isBookmarked: false,
+                            );
+                          },
+                        ).toList(),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 200.0),
+                        child: Center(
+                          child: Text(
+                            "No Results Found!",
+                          ),
                         ),
-                        padding: const EdgeInsets.only(
-                          left: 15.0,
-                          right: 10.0,
-                          top: 12.0,
-                          bottom: 10.0,
+                      ),
+
+            const SizedBox(
+              height: 20.0,
+            ),
+
+            // Pagination
+            data.isNotEmpty
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          if (startPagination >= paginationGap) {
+                            startPagination -= paginationGap;
+                            endPagination -= paginationGap;
+                            search();
+                          }
+                        },
+                        icon: Icon(
+                          Ionicons.arrow_back,
+                          color: Colors.grey[400]!,
+                          size: 20.0,
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          // border: Border.all(
-                          //   color: Colors.black,
-                          // ),
-                          borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      Text(
+                        "Showing results from $startPagination to $endPagination",
+                        style: TextStyle(
+                          color: Colors.grey[600]!,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // AUTHORS
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  bottom: 5.0, right: 5.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "ID: ${eachPaper["id"].toString().substring(eachPaper["id"].lastIndexOf("/") + 1, eachPaper["id"].length)}",
-                                    style: const TextStyle(
-                                      fontSize: 12.0,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10.0),
-                                  Text(
-                                    "Published: ${eachPaper["published"].toString().substring(0, 10)}",
-                                    style: const TextStyle(
-                                      fontSize: 12.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // TITLE
-                            GestureDetector(
-                              onTap: () => parseAndLaunchURL(
-                                eachPaper["id"].toString(),
-                                eachPaper["title"].toString(),
-                              ),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Text(
-                                  eachPaper["title"]
-                                      .toString()
-                                      .replaceAll(RegExp(r'\\n'), '')
-                                      .replaceAll(RegExp(r'\\ '), ''),
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // PUBLISHED DATE
-                            // Container(
-                            //   padding: const EdgeInsets.only(bottom: 10.0),
-                            //   child: Text(
-                            //     "Published: ${eachPaper["published"].toString().substring(0, 10)}",
-                            //     style: const TextStyle(
-                            //       fontSize: 12.0,
-                            //     ),
-                            //   ),
-                            // ),
-                            // AUTHORS
-                            // Container(
-                            //   padding: const EdgeInsets.only(bottom: 10.0),
-                            //   child: Text(
-                            //     "Authors: ${jsonEncode(eachPaper["author"])}",
-                            //   ),
-                            // ),
-                            // Container(
-                            //   padding: const EdgeInsets.only(bottom: 20.0),
-                            //   child: Column(
-                            //     children: (jsonDecode(jsonEncode(eachPaper["author"])))
-                            //         .map((eachAuthor) {
-                            //       return Text(
-                            //         eachAuthor["name"].toString(),
-                            //       );
-                            //     }).toList(),
-                            //   ),
-                            // ),
-                            // SUMMARY, DOWNLOAD and SHARE
-                            Container(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        showSummary(
-                                            eachPaper["summary"].toString());
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0,
-                                          vertical: 8.0,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          border: Border.all(
-                                            color: Colors.black,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          // borderRadius: const BorderRadius.only(
-                                          //   bottomLeft: Radius.circular(12.0),
-                                          //   bottomRight: Radius.circular(12.0),
-                                          // ),
-                                        ),
-                                        child: const Text(
-                                          "Summary",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.bookmark_border,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Share.share(pdfURL);
-                                    },
-                                    icon: const Icon(
-                                      Ionicons.share_outline,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.downloading_outlined,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          startPagination += paginationGap;
+                          endPagination += paginationGap;
+                          search();
+                        },
+                        icon: Icon(
+                          Ionicons.arrow_forward,
+                          color: Colors.grey[400]!,
+                          size: 20.0,
                         ),
-                      );
-                    },
-                  ).toList(),
-                ),
-        ],
+                      ),
+                    ],
+                  )
+                : Container(),
+
+            const SizedBox(
+              height: 200.0,
+            ),
+          ],
+        ),
       ),
     );
   }

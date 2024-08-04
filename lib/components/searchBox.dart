@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatefulWidget {
@@ -19,44 +20,45 @@ class _SearchBoxState extends State<SearchBox> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        left: 25.0,
+        left: 30.0,
         right: 10.0,
       ),
       margin: const EdgeInsets.only(
-        // left: 10.0,
-        // right: 10.0,
-        bottom: 15.0,
+        bottom: 12.0,
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: const Color(0xff121212),
         border: Border(
           bottom: BorderSide(
-            // color: Colors.blue, // Border color
+            color: Colors.grey[200]!, // Border color
             width: 2.0, // Border width
           ),
         ),
-        // border: Border.all(
-        //   color: Colors.black,
-        // ),
-        // borderRadius: BorderRadius.circular(100.0),
       ),
       child: Row(
         children: [
           Expanded(
             child: TextField(
               controller: widget.searchTermController,
-              decoration: const InputDecoration(
-                hintText: "Attention is all...",
+              keyboardType: TextInputType.url,
+              cursorColor: Colors.white,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+              decoration: InputDecoration(
+                hintText: "Search...",
+                hintStyle: TextStyle(color: Colors.grey[700]),
                 border: InputBorder.none,
               ),
             ),
           ),
           IconButton(
             onPressed: () {
-              widget.searchFunction();
+              widget.searchFunction(resetPagination: true);
             },
             icon: const Icon(
               Icons.search,
+              color: Colors.white,
             ),
           ),
         ],

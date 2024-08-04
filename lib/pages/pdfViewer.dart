@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -9,19 +10,20 @@ class PDFViewer extends StatefulWidget {
     required this.savePath,
     required this.pdfURL,
     required this.urlType,
+    required this.downloadPaper,
   });
 
   final String paperTitle;
   final String savePath;
   final String pdfURL;
   final int urlType;
+  final Function downloadPaper;
 
   @override
   State<PDFViewer> createState() => _PDFViewerState();
 }
 
 class _PDFViewerState extends State<PDFViewer> {
-  bool isNightMode = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,24 +33,13 @@ class _PDFViewerState extends State<PDFViewer> {
           widget.paperTitle,
           style: const TextStyle(
             fontSize: 16.0,
-            color: Colors.white,
           ),
         ),
         actions: [
           IconButton(
-            onPressed: () => {
-              setState(() {
-                isNightMode != isNightMode;
-              }),
-            },
+            onPressed: () => {widget.downloadPaper(widget.pdfURL)},
             icon: const Icon(
-              Icons.download_outlined,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bookmark_outline,
+              Icons.downloading_outlined,
             ),
           ),
         ],
@@ -64,7 +55,6 @@ class _PDFViewerState extends State<PDFViewer> {
               // swipeHorizontal: true,
               autoSpacing: false,
               pageFling: false,
-              nightMode: isNightMode,
             ),
     );
   }
