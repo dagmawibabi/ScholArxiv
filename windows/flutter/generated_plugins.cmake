@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_tts
   permission_handler_windows
   share_plus
   syncfusion_pdfviewer_windows

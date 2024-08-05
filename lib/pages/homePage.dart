@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var arxivBaseURL = "http://export.arxiv.org/api/query?search_query=all:";
   int startPagination = 0;
-  int endPagination = 30;
+  int maxContent = 30;
   int paginationGap = 30;
   var arxivBaseLimitURL = "&start=0&max_results=30";
   var pdfBaseURL = "https://arxiv.org/pdf";
@@ -77,9 +77,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> search({bool? resetPagination}) async {
     if (resetPagination == true) {
       startPagination = 0;
-      endPagination = paginationGap;
     }
-    arxivBaseLimitURL = "&start=$startPagination&max_results=$endPagination";
+    arxivBaseLimitURL = "&start=$startPagination&max_results=$maxContent";
     isHomeScreenLoading = true;
     data = [];
     setState(() {});
@@ -92,7 +91,6 @@ class _HomePageState extends State<HomePage> {
       String randomItem = suggestions[randomIndex];
       int pageJump = random.nextInt(3) + random.nextInt(2);
       startPagination += paginationGap * pageJump;
-      endPagination += paginationGap * pageJump;
 
       result = await dio.get("$arxivBaseURL$randomItem$arxivBaseLimitURL");
     } else {
@@ -264,18 +262,19 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           if (startPagination >= paginationGap) {
                             startPagination -= paginationGap;
-                            endPagination -= paginationGap;
                             search();
                           }
                         },
                         icon: Icon(
                           Ionicons.arrow_back,
-                          color: Colors.grey[400]!,
+                          color: startPagination < paginationGap
+                              ? Colors.white
+                              : Colors.grey[400]!,
                           size: 20.0,
                         ),
                       ),
                       Text(
-                        "Showing results from $startPagination to $endPagination",
+                        "Showing results from $startPagination to ${startPagination + maxContent}",
                         style: TextStyle(
                           color: Colors.grey[600]!,
                         ),
@@ -283,7 +282,6 @@ class _HomePageState extends State<HomePage> {
                       IconButton(
                         onPressed: () {
                           startPagination += paginationGap;
-                          endPagination += paginationGap;
                           search();
                         },
                         icon: Icon(
