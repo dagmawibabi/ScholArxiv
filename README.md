@@ -1,16 +1,51 @@
-# arxiv
+# ScholArxiv
 
-A new Flutter project.
+![](assets/screenshots/ScholArxiv.png)
 
-## Getting Started
+**ScholArxiv** is a Flutter application that allows users to search and view academic papers from the arXiv repository. This app provides an aesthetic and minimal interface to access, view, and bookmark academic papers. Users can also download and view papers offline.
 
-This project is a starting point for a Flutter application.
+### Features
 
-A few resources to get you started if this is your first Flutter project:
+📚**Read Papers**: Read entire papers in detail within the app.
+🔖**Bookmarks**: Save your favorite papers for quick access.
+📝**Paper Summaries**: View brief paper summaries.
+🔎**Search Academic Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
+⬇️**Download and Share Papers**: Download papers for offline reading or you can share document links to others.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app relies on the following packages:
+
+-   **dio**: For making HTTP requests.
+-   **xml2json**: For converting XML data to JSON format.
+-   **url_launcher**: For launching URLs.
+-   **permission_handler**: For handling permissions.
+-   **path_provider**: For accessing the file system paths.
+-   **liquid_pull_to_refresh**: For implementing pull-to-refresh functionality.
+-   **ionicons**: For using Ionicons in the UI.
+
+### Contribution
+
+You can help support the project in three ways. ✨
+
+1. By Contributing
+    - Fork this repo
+    - Add your new changes
+    - Comment well
+    - Open a PR
+1. By Starring the Repo
+1. By Sharing this Project to your friends and community
+
+You can use the issues tab to get inspiration.
+
+### License
+
+This project is licensed under the GNU General Public License. You can make any contribution and distribute as long as your preleases are also open source - see the LICENSE file for details.
+
+### Acknowledgements
+
+Thank you to arXiv for the use of its open access interoperability.
+
+---
+
+_Made with 🤍 by Dream Intelligence_
