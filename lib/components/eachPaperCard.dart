@@ -158,7 +158,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Text(
-              "Authors: ${widget.eachPaper["author"].toString().replaceAll(RegExp("[name:\\[\\]\\{\\}]"), "")}",
+              "Authors: ${widget.eachPaper["author"].toString().replaceAll("name:", "").replaceAll(RegExp("[\\[\\]\\{\\}]"), "")}",
               style: const TextStyle(
                 fontSize: 13.0,
               ),
