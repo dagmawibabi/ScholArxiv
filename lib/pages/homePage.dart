@@ -296,8 +296,32 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Container(),
 
+            Container(
+              width: 100.0,
+              padding: const EdgeInsets.only(top: 200.0, bottom: 20.0),
+              child: Center(
+                child: Text(
+                  "Thank you to arXiv for use of its \nopen access interoperability.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey[400]!,
+                    fontSize: 12.0,
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                "Made with 🤍 by Dream Intelligence",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.grey[500]!,
+                  fontSize: 12.0,
+                ),
+              ),
+            ),
             const SizedBox(
-              height: 200.0,
+              height: 20.0,
             ),
           ],
         ),
