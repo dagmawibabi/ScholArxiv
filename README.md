@@ -1,8 +1,7 @@
 # ScholArxiv
 
-![](assets/screenshots/ScholArxiv.png)
-
 **ScholArxiv** is an open-source aesthetic and minimal app that allows users to search and view, bookmark and share, download and read summaries of academic papers from the arXiv repository.
+![](assets/screenshots/ScholArxiv.png)
 
 ### Features
 
