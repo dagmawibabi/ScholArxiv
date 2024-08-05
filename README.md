@@ -10,7 +10,7 @@
 
 🔖 **Bookmarks**: Save your favorite papers for quick access.
 
-📝 **Paper Summaries**: View brief paper summaries.
+📝 **Paper Summaries**: View and listen to brief paper summaries.
 
 🔎 **Search Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
 
