@@ -2,14 +2,18 @@
 
 ![](assets/screenshots/ScholArxiv.png)
 
-**ScholArxiv** is a Flutter application that allows users to search and view academic papers from the arXiv repository. This app provides an aesthetic and minimal interface to access, view, and bookmark academic papers. Users can also download and view papers offline.
+**ScholArxiv** is an open-source aesthetic and minimal app that allows users to search and view, bookmark and share, download and read summaries of academic papers from the arXiv repository.
 
 ### Features
 
 📚**Read Papers**: Read entire papers in detail within the app.
+
 🔖**Bookmarks**: Save your favorite papers for quick access.
+
 📝**Paper Summaries**: View brief paper summaries.
+
 🔎**Search Academic Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
+
 ⬇️**Download and Share Papers**: Download papers for offline reading or you can share document links to others.
 
 ### Dependencies
