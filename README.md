@@ -11,7 +11,7 @@
 
 📝 **Paper Summaries**: View brief paper summaries.
 
-🔎 **Search Academic Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
+🔎 **Search Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
 
 ⬇️ **Download and Share Papers**: Download papers for offline reading or you can share document links to others.
 
