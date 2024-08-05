@@ -42,7 +42,7 @@ dependencies:
     syncfusion_flutter_pdfviewer: ^26.2.7
     ionicons: ^0.2.2
     share_plus: ^7.2.2
-    permission_handler: ^11.3.1
+    # permission_handler: ^11.3.1
     hive: ^2.2.3
     hive_flutter: ^1.1.0
     liquid_pull_to_refresh: ^3.0.1

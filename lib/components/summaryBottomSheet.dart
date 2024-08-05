@@ -226,7 +226,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                       top: 10.0,
                       bottom: 100.0,
                     ),
-                    child: Text(
+                    child: SelectableText(
                       widget.paperData["summary"]
                           .trim()
                           .replaceAll(RegExp(r'\\n'), ' ')

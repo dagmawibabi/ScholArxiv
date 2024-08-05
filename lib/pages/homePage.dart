@@ -10,7 +10,6 @@ import 'package:arxiv/pages/pdfViewer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:path_provider/path_provider.dart';
@@ -165,18 +164,10 @@ class _HomePageState extends State<HomePage> {
     await launchUrl(Uri.parse(selectedURL));
   }
 
-  void askPermissions() async {
-    await Permission.accessMediaLocation.request();
-    await Permission.manageExternalStorage.request();
-    await Permission.mediaLibrary.request();
-    await Permission.storage.request();
-  }
-
   @override
   void initState() {
     super.initState();
     search();
-    askPermissions();
   }
 
   @override
