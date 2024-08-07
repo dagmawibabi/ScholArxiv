@@ -215,7 +215,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.47,
+              height: MediaQuery.sizeOf(context).height * 0.47,
               width: double.infinity,
               child: ListView(
                 children: [
