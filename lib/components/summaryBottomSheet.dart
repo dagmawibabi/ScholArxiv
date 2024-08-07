@@ -57,7 +57,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
 
   void getSpeedRate() async {
     final box = await Hive.openBox("speedRateBox");
-    speedRate = box.get("speedRate");
+    speedRate = await box.get("speedRate");
     await Hive.close();
     tts.setSpeechRate(speedRate);
   }
