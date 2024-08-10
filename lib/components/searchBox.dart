@@ -61,7 +61,6 @@ class _SearchBoxState extends State<SearchBox> {
             },
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
             ),
           ),
         ],
