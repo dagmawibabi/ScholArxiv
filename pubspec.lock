@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "67.0.0"
+  adaptive_theme:
+    dependency: "direct main"
+    description:
+      name: adaptive_theme
+      sha256: f4ee609b464e5efc68131d9d15ba9aa1de4e3b5ede64be17781c6e19a52d637d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.0"
   analyzer:
     dependency: transitive
     description:
@@ -640,6 +648,62 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.0"
+  shared_preferences:
+    dependency: transitive
+    description:
+      name: shared_preferences
+      sha256: c272f9cabca5a81adc9b0894381e9c1def363e980f960fa903c604c471b22f68
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      sha256: a7e8467e9181cef109f601e3f65765685786c1a738a83d7fbbde377589c0d974
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  shared_preferences_foundation:
+    dependency: transitive
+    description:
+      name: shared_preferences_foundation
+      sha256: "776786cff96324851b656777648f36ac772d88bc4c669acff97b7fce5de3c849"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.1"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      sha256: d2ca4132d3946fec2184261726b355836a82c33d7d5b67af32692aff18a4684e
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.2"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   shelf:
     dependency: transitive
     description:
@@ -805,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  theme_provider:
+    dependency: "direct main"
+    description:
+      name: theme_provider
+      sha256: "6a2839ee1bd539ceb789f25ea9696fe90f9dfad28e3228f209b8ff9255c58099"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   timing:
     dependency: transitive
     description:

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class SearchBox extends StatefulWidget {
   const SearchBox({
@@ -27,13 +28,7 @@ class _SearchBoxState extends State<SearchBox> {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xff121212),
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey[200]!, // Border color
-            width: 2.0, // Border width
-          ),
-        ),
+        color: ThemeProvider.themeOf(context).data.appBarTheme.backgroundColor,
       ),
       child: Row(
         children: [
@@ -41,9 +36,17 @@ class _SearchBoxState extends State<SearchBox> {
             child: TextField(
               controller: widget.searchTermController,
               keyboardType: TextInputType.url,
-              cursorColor: Colors.white,
-              style: const TextStyle(
-                color: Colors.white,
+              cursorColor: ThemeProvider.themeOf(context).id == "mixed_theme"
+                  ? Colors.white
+                  : ThemeProvider.themeOf(context)
+                      .data
+                      .textTheme
+                      .bodyLarge
+                      ?.color,
+              style: TextStyle(
+                color: ThemeProvider.themeOf(context).id == "light_theme"
+                    ? Colors.black
+                    : Colors.white,
               ),
               decoration: InputDecoration(
                 hintText: "Search...",

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({
@@ -13,9 +14,9 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
-      child: const Center(
+      child: Center(
         child: CircularProgressIndicator(
-          color: Colors.black,
+          color: ThemeProvider.themeOf(context).data.textTheme.bodyLarge?.color,
         ),
       ),
     );

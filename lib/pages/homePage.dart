@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:arxiv/components/eachPaperCard.dart';
 import 'package:arxiv/components/loadingIndicator.dart';
 import 'package:arxiv/components/searchBox.dart';
@@ -10,6 +9,7 @@ import 'package:arxiv/pages/pdfViewer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:path_provider/path_provider.dart';
@@ -64,6 +64,18 @@ class _HomePageState extends State<HomePage> {
     "spider",
     "dog",
     "fear",
+    "love",
+    "relationship",
+    "micro",
+    "microchip",
+    "supher",
+    "volcano",
+    "heart",
+    "ecg",
+    "mobile",
+    "laptop",
+    "pc",
+    "sitting",
   ];
 
   var isHomeScreenLoading = true;
@@ -174,10 +186,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:
+            ThemeProvider.themeOf(context).data.appBarTheme.backgroundColor,
         title: const Text(
           "ScholArxiv",
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              ThemeProvider.controllerOf(context).nextTheme();
+            },
+            icon: Icon(
+              ThemeProvider.themeOf(context).id == "light_theme"
+                  ? Icons.dark_mode_outlined
+                  : ThemeProvider.themeOf(context).id == "dark_theme"
+                      ? Icons.sunny_snowing
+                      : Ionicons.sunny,
+            ),
+          ),
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -196,7 +222,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
       body: LiquidPullToRefresh(
         onRefresh: search,
         backgroundColor: Colors.white,
@@ -209,9 +234,6 @@ class _HomePageState extends State<HomePage> {
               searchTermController: searchTermController,
               searchFunction: search,
             ),
-
-            // Results Label
-            // const ResultLabel(),
 
             // Data or Loading
             isHomeScreenLoading == true

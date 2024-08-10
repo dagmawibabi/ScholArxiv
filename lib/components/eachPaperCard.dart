@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class EachPaperCard extends StatefulWidget {
   const EachPaperCard({
@@ -111,7 +112,13 @@ class _EachPaperCardState extends State<EachPaperCard> {
         bottom: 6.0,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: ThemeProvider.themeOf(context)
+                .data
+                .textTheme
+                .bodyLarge
+                ?.color
+                ?.withAlpha(12) ??
+            Colors.grey[100],
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -165,26 +172,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
             ),
           ),
 
-          // AUTHORS
-          // Container(
-          //   padding: const EdgeInsets.only(bottom: 10.0),
-          //   child: Text(
-          //     "Authors: ${jsonEncode(eachPaper["author"])}",
-          //   ),
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.only(bottom: 20.0),
-          //   child: Column(
-          //     children: (jsonDecode(jsonEncode(eachPaper["author"])))
-          //         .map((eachAuthor) {
-          //       return Text(
-          //         eachAuthor["name"].toString(),
-          //       );
-          //     }).toList(),
-          //   ),
-          // ),
           // SUMMARY, DOWNLOAD and SHARE
-
           // Actions
           Row(
             children: [
@@ -200,20 +188,36 @@ class _EachPaperCardState extends State<EachPaperCard> {
                       vertical: 8.0,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xff121212),
+                      color: ThemeProvider.themeOf(context).id.toString() ==
+                              "mixed_theme"
+                          ? const Color(0xff121212)
+                          : Colors.transparent,
                       border: Border.all(
-                        color: Colors.black,
+                        color: ThemeProvider.themeOf(context).id.toString() ==
+                                "mixed_theme"
+                            ? const Color(0xff121212)
+                            : ThemeProvider.themeOf(context)
+                                    .data
+                                    .textTheme
+                                    .bodyLarge!
+                                    .color ??
+                                Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(20.0),
-                      // borderRadius: const BorderRadius.only(
-                      //   bottomLeft: Radius.circular(12.0),
-                      //   bottomRight: Radius.circular(12.0),
-                      // ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Summary",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: ThemeProvider.themeOf(context).id.toString() ==
+                                "mixed_theme"
+                            ? ThemeProvider.themeOf(context)
+                                .data
+                                .scaffoldBackgroundColor
+                            : ThemeProvider.themeOf(context)
+                                .data
+                                .textTheme
+                                .bodyLarge
+                                ?.color,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -229,7 +233,11 @@ class _EachPaperCardState extends State<EachPaperCard> {
                   isBookmarked == false
                       ? Icons.bookmark_border
                       : Icons.bookmark,
-                  color: isBookmarked == false ? Colors.black : Colors.black,
+                  color: ThemeProvider.themeOf(context)
+                      .data
+                      .textTheme
+                      .bodyLarge
+                      ?.color,
                 ),
               ),
               IconButton(
@@ -238,8 +246,13 @@ class _EachPaperCardState extends State<EachPaperCard> {
                     widget.eachPaper["id"].toString(),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Ionicons.share_outline,
+                  color: ThemeProvider.themeOf(context)
+                      .data
+                      .textTheme
+                      .bodyLarge
+                      ?.color,
                 ),
               ),
               IconButton(
@@ -248,8 +261,13 @@ class _EachPaperCardState extends State<EachPaperCard> {
                     widget.eachPaper["id"].toString(),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.downloading_outlined,
+                  color: ThemeProvider.themeOf(context)
+                      .data
+                      .textTheme
+                      .bodyLarge
+                      ?.color,
                 ),
               ),
             ],

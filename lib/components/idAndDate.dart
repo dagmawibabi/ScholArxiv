@@ -34,12 +34,6 @@ class _IDAndDateState extends State<IDAndDate> {
             ),
           ),
           const SizedBox(width: 10.0),
-          // Text(
-          //   "Published: ${widget.date}",
-          //   style: const TextStyle(
-          //     fontSize: 12.0,
-          //   ),
-          // ),
         ],
       ),
     );

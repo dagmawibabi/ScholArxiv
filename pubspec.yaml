@@ -47,6 +47,8 @@ dependencies:
     hive_flutter: ^1.1.0
     liquid_pull_to_refresh: ^3.0.1
     flutter_tts: ^4.0.2
+    adaptive_theme: ^3.6.0
+    theme_provider: ^0.6.0
 
 dev_dependencies:
     flutter_test:
