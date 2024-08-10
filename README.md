@@ -4,8 +4,6 @@
 
 ![](assets/banners/ScholArxiv.png)
 ![](assets/banners/ScholArxiv2.png)
-![](assets/banners/ScholArxiv3.png)
-![](assets/banners/ScholArxiv4.png)
 
 ### Features
 
@@ -18,18 +16,6 @@
 🔎 **Search Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
 
 ⬇️ **Download and Share Papers**: Download papers for offline reading or you can share document links to others.
-
-### Dependencies
-
-The app relies on the following packages:
-
--   **dio**: For making HTTP requests.
--   **xml2json**: For converting XML data to JSON format.
--   **url_launcher**: For launching URLs.
--   **permission_handler**: For handling permissions.
--   **path_provider**: For accessing the file system paths.
--   **liquid_pull_to_refresh**: For implementing pull-to-refresh functionality.
--   **ionicons**: For using Ionicons in the UI.
 
 ### Contribution
 
@@ -44,6 +30,11 @@ You can help support the project in three ways. ✨
 1. By Sharing this Project to your friends and community
 
 You can use the issues tab to get inspiration.
+
+### More Illustrations
+
+![](assets/banners/ScholArxiv3.png)
+![](assets/banners/ScholArxiv4.png)
 
 ### License
 
