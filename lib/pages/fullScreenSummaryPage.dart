@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:hive/hive.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class FullScreenSummaryPage extends StatefulWidget {

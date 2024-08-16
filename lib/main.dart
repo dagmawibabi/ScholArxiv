@@ -1,8 +1,9 @@
-import "package:arxiv/models/bookmarks.dart";
-import "package:arxiv/pages/homePage.dart";
-import "package:flutter/material.dart";
-import "package:hive_flutter/hive_flutter.dart";
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import 'models/bookmarks.dart';
+import 'pages/homePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
