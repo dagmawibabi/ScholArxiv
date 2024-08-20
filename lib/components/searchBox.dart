@@ -53,6 +53,9 @@ class _SearchBoxState extends State<SearchBox> {
                 hintStyle: TextStyle(color: Colors.grey[700]),
                 border: InputBorder.none,
               ),
+              onSubmitted: (searchTerm) {
+                widget.searchFunction(resetPagination: true); 
+              },
             ),
           ),
           IconButton(
