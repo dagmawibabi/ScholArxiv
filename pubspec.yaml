@@ -48,6 +48,7 @@ dependencies:
     liquid_pull_to_refresh: ^3.0.1
     flutter_tts: ^4.0.2
     theme_provider: ^0.6.0
+    flutter_tex: ^4.0.9
 
 dev_dependencies:
     flutter_test:
