@@ -5,6 +5,7 @@ on:
     branches:
       - dev
       - master
+      - main
   pull_request:
     types:
       - opened
@@ -12,6 +13,7 @@ on:
     branches:
       - dev
       - master
+      - main
 
 jobs:
   build:
