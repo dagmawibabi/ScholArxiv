@@ -36,7 +36,7 @@ jobs:
             pull_request: <a href="https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}">#${{ github.event.pull_request.number }}</a>
             repo: <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a>
             assignedTo: ${{ secrets.ASSIGNED_TO }}
-            message: Built APK will be sent ina moment...
+            message: Built APK will be sent in a moment...
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -44,7 +44,7 @@ jobs:
           flutter-version: ${{ secrets.FLUTTER_VERSION || env.FLUTTER_VERSION || '3.4.4' }} # goes for secrets, then environments defaults to 3.4.4
 
       - name: Build
-        run: flutter build apk --release -v
+        run: flutter build apk --release --stacktrace
 
       - name: Generate SHORT_SHA
         run: |
