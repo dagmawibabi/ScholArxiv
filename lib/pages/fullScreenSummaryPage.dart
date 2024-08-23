@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_tex/flutter_tex.dart';
+
 import 'package:hive/hive.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import 'package:arxiv/components/eachPaperCard.dart';
 
 class FullScreenSummaryPage extends StatefulWidget {
   const FullScreenSummaryPage({
@@ -93,6 +97,15 @@ class _FullScreenSummaryPageState extends State<FullScreenSummaryPage> {
 
   @override
   Widget build(BuildContext context) {
+    String summary = widget.paperData["summary"]
+        .trim()
+        .replaceAll(RegExp(r'\\n'), ' ')
+        .replaceAll(RegExp(r'\\'), '');
+    if (containsLatex(summary)) {
+      summary = summary.replaceAll(RegExp(r'\$ '), r' \) ');
+      summary = summary.replaceAll(RegExp(r' \$'), r' \( ');
+      summary = summary.replaceAll(r'$', r' \) ');
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -191,15 +204,30 @@ class _FullScreenSummaryPageState extends State<FullScreenSummaryPage> {
               left: 20.0,
               right: 20.0,
             ),
-            child: SelectableText(
-              widget.paperData["summary"]
-                  .trim()
-                  .replaceAll(RegExp(r'\\n'), ' ')
-                  .replaceAll(RegExp(r'\\'), ''),
-              style: const TextStyle(
-                fontSize: 17.0,
-              ),
-            ),
+            child: containsLatex(summary)
+                          ? TeXView(
+                              child: TeXViewDocument(
+                                summary,
+                                style: TeXViewStyle(
+                                  contentColor: ThemeProvider.themeOf(context)
+                                      .data
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.color,
+                                  textAlign: TeXViewTextAlign.left,
+                                  fontStyle: TeXViewFontStyle(
+                                    fontSize: 17,
+                                    fontWeight: TeXViewFontWeight.normal
+                              ),
+                            ),
+                          ),
+                        )
+                          : SelectableText(
+                              summary,
+                              style: const TextStyle(
+                                fontSize: 17.0,
+                              ),
+                            ),
           ),
         ],
       ),

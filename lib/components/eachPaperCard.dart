@@ -2,10 +2,16 @@
 import 'package:arxiv/components/idAndDate.dart';
 import 'package:arxiv/components/summaryBottomSheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+bool containsLatex(String title) {
+  final latexRegex = RegExp(r'[$\\{}]');
+  return latexRegex.hasMatch(title);
+}
 
 class EachPaperCard extends StatefulWidget {
   const EachPaperCard({
@@ -98,6 +104,17 @@ class _EachPaperCardState extends State<EachPaperCard> {
 
   @override
   Widget build(BuildContext context) {
+    String title = widget.eachPaper["title"]
+        .toString()
+        .replaceAll(RegExp(r'\\n'), '')
+        .replaceAll(RegExp(r'\\ '), '');
+
+    if (containsLatex(title) == true) {
+      title = title.replaceAll(RegExp(r'\$ '), r' \) ');
+      title = title.replaceAll(RegExp(r' \$'), r' \( ');
+      title = title.replaceAll(r'$', r' \) ');
+    }
+
     return Container(
       margin: const EdgeInsets.only(
         left: 8.0,
@@ -140,16 +157,23 @@ class _EachPaperCardState extends State<EachPaperCard> {
             ),
             child: Container(
               padding: const EdgeInsets.only(bottom: 5.0),
-              child: Text(
-                widget.eachPaper["title"]
-                    .toString()
-                    .replaceAll(RegExp(r'\\n'), '')
-                    .replaceAll(RegExp(r'\\ '), ''),
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: containsLatex(title)
+                  ? TeXView(
+                      child: TeXViewDocument(
+                        title,
+                        style: TeXViewStyle(
+                          textAlign: TeXViewTextAlign.left,
+                          fontStyle: TeXViewFontStyle(fontSize: 16, fontWeight: TeXViewFontWeight.bold),
+                        ),
+                      ),
+                    )
+                  : Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ),
 
