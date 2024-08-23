@@ -5,6 +5,7 @@ on:
     branches:
       - dev
       - master
+      - main
   pull_request:
     types:
       - opened
@@ -12,6 +13,7 @@ on:
     branches:
       - dev
       - master
+      - main
 
 jobs:
   build:
@@ -24,12 +26,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.10.5" # Specify the Flutter version you want to use
-
-      - name: Get all git tags
-        run: git fetch --prune --unshallow --tags
-
-      - name: Calculate next version
-        run: chmod +x ./scripts/compute-version.sh ./scripts/get-version.sh && ./scripts/compute-version.sh $LATEST_COMMIT_SHA && echo "BUILD_VERSION=$(./scripts/get-version.sh)" >> $GITHUB_ENV
 
       - name: Build
         run: flutter build apk --release
