@@ -11,6 +11,7 @@ on:
       - reopened
     branches:
       - dev
+      - master
 
 jobs:
   build:
