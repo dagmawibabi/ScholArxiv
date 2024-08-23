@@ -1,0 +1,57 @@
+name: Build and distribute (staging)
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - dev
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.5" # Specify the Flutter version you want to use
+
+      - name: Get all git tags
+        run: git fetch --prune --unshallow --tags
+
+      - name: Calculate next version
+        run: chmod +x ./scripts/compute-version.sh ./scripts/get-version.sh && ./scripts/compute-version.sh $LATEST_COMMIT_SHA && echo "BUILD_VERSION=$(./scripts/get-version.sh)" >> $GITHUB_ENV
+
+      - name: Build
+        run: flutter build apk --release
+
+      - name: Generate SHORT_SHA
+        run: |
+          echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
+          echo "SHORT_BASE_SHA=`echo ${{ github.event.pull_request.base.sha }} | cut -c1-8`" >> $GITHUB_ENV
+          echo "SHORT_HEAD_SHA=`echo ${{ github.event.pull_request.head.sha }} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Send build to Telegram group
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.STAGING_TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.STAGING_TELEGRAM_BOT_TOKEN }}
+          format: HTML
+          message: |
+            version: ${{ env.BUILD_VERSION }}
+            client_id: post-world-customer-android
+            build_type: Staging
+            commit: <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}">${{ env.SHORT_SHA }}</a>
+            diff: <a href="https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}">${{ env.SHORT_BASE_SHA }}...${{ env.SHORT_HEAD_SHA }}</a>
+            pull_request: <a href="https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}">#${{ github.event.pull_request.number }}</a>
+            repo: <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a>
+          document: ${{ github.workspace }}/build/app/outputs/flutter-apk/app-release.apk
