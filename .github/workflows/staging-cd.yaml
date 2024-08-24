@@ -46,6 +46,15 @@ jobs:
       - name: Build
         run: chmod +x ./scripts/build-and-filter-errors.sh && ./scripts/build-and-filter-errors.sh
 
+      - name: Send error
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          message: error...
+          to: ${{ secrets.STAGING_TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.STAGING_TELEGRAM_BOT_TOKEN }}
+          document: ${{ github.workspace }}/build_output.log
+
       - name: Generate SHORT_SHA
         run: |
           echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
