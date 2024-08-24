@@ -22,13 +22,43 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Notify contributors
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.STAGING_TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.STAGING_TELEGRAM_BOT_TOKEN }}
+          format: HTML
+          message: |
+            project: ScholArxiv
+            build_type: Staging
+            commit: <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}">${{ env.SHORT_SHA }}</a>
+            diff: <a href="https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}">${{ env.SHORT_BASE_SHA }}...${{ env.SHORT_HEAD_SHA }}</a>
+            pull_request: <a href="https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}">#${{ github.event.pull_request.number }}</a>
+            repo: <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a>
+            assignedTo: ${{ secrets.ASSIGNED_TO }}
+            message: Built APK will be sent in a moment...
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+          
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ secrets.FLUTTER_VERSION || env.FLUTTER_VERSION || '3.4.4' }} # goes for secrets, then environments defaults to 3.4.4
 
       - name: Build
-        run: flutter build apk --release
+        run: chmod +x ./scripts/build-and-filter-errors.sh && ./scripts/build-and-filter-errors.sh
+
+      - name: Send error
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          message: error...
+          to: ${{ secrets.STAGING_TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.STAGING_TELEGRAM_BOT_TOKEN }}
+          document: ${{ github.workspace }}/build_output.log
 
       - name: Generate SHORT_SHA
         run: |
@@ -44,7 +74,7 @@ jobs:
           format: HTML
           message: |
             version: ${{ env.BUILD_VERSION }}
-            client_id: post-world-customer-android
+            client_id: ScholArxiv
             build_type: Staging
             commit: <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}">${{ env.SHORT_SHA }}</a>
             diff: <a href="https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}">${{ env.SHORT_BASE_SHA }}...${{ env.SHORT_HEAD_SHA }}</a>
