@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:arxiv/components/idAndDate.dart';
 import 'package:arxiv/components/summaryBottomSheet.dart';
+import 'package:arxiv/pages/aiChatPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 import 'package:hive/hive.dart';
@@ -163,7 +164,8 @@ class _EachPaperCardState extends State<EachPaperCard> {
                         title,
                         style: TeXViewStyle(
                           textAlign: TeXViewTextAlign.left,
-                          fontStyle: TeXViewFontStyle(fontSize: 16, fontWeight: TeXViewFontWeight.bold),
+                          fontStyle: TeXViewFontStyle(
+                              fontSize: 16, fontWeight: TeXViewFontWeight.bold),
                         ),
                       ),
                     )
@@ -287,6 +289,26 @@ class _EachPaperCardState extends State<EachPaperCard> {
                 },
                 icon: Icon(
                   Icons.downloading_outlined,
+                  color: ThemeProvider.themeOf(context)
+                      .data
+                      .textTheme
+                      .bodyLarge
+                      ?.color,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AIChatPage(
+                        paperData: widget.eachPaper,
+                      ),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.memory_outlined,
                   color: ThemeProvider.themeOf(context)
                       .data
                       .textTheme

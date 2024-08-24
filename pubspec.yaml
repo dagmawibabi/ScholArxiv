@@ -49,6 +49,8 @@ dependencies:
     flutter_tts: ^4.0.2
     theme_provider: ^0.6.0
     flutter_tex: ^4.0.9
+    google_generative_ai: ^0.4.5
+    flutter_markdown: ^0.7.3+1
 
 dev_dependencies:
     flutter_test:
