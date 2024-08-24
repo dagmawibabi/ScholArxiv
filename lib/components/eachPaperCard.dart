@@ -163,6 +163,11 @@ class _EachPaperCardState extends State<EachPaperCard> {
                       child: TeXViewDocument(
                         title,
                         style: TeXViewStyle(
+                          contentColor: ThemeProvider.themeOf(context)
+                              .data
+                              .textTheme
+                              .bodyLarge
+                              ?.color,
                           textAlign: TeXViewTextAlign.left,
                           fontStyle: TeXViewFontStyle(
                               fontSize: 16, fontWeight: TeXViewFontWeight.bold),
