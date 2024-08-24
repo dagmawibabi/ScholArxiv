@@ -38,6 +38,11 @@ jobs:
             assignedTo: ${{ secrets.ASSIGNED_TO }}
             message: Built APK will be sent in a moment...
 
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+          
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
