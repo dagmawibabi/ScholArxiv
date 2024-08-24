@@ -55,7 +55,7 @@ jobs:
         if: always()
         uses: appleboy/telegram-action@master
         with:
-          message: error...
+          message: Build Output file incoming...
           to: ${{ secrets.STAGING_TELEGRAM_CHAT_ID }}
           token: ${{ secrets.STAGING_TELEGRAM_BOT_TOKEN }}
           document: ${{ github.workspace }}/build_output.log
