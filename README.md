@@ -1,13 +1,15 @@
 # ScholArxiv
 
-**ScholArxiv** is an open-source aesthetic and minimal app that allows users to search, read, bookmark, share, download and view summaries of academic papers from the arXiv repository that you can [download now](https://github.com/dagmawibabi/ScholArxiv/releases/download/v1.0.0/ScholArxiv.apk).
+**ScholArxiv** is an open-source aesthetic and minimal app that allows users to search, read, bookmark, share, download and view summaries of academic papers from the arXiv repository that you can [download now](https://github.com/dagmawibabi/ScholArxiv/releases/download/v3.0.0/ScholArxiv.apk). Now you can configure your Gemini API key and converse with AI to expand and dive deeper into the papers you're discovering.
 
-![](assets/banners/ScholArxiv.png)
-![](assets/banners/ScholArxiv2.png)
+![](assets/banners/ScholArxiv5.png)
+![](assets/banners/ScholArxiv7.png)
 
 ### Features
 
 📚 **Read Papers**: Read entire papers in detail within the app.
+
+✨ **AI Chat**: You can chat with AI to delve deeper and understand papers.
 
 🔖 **Bookmarks**: Save your favorite papers for quick access.
 
@@ -21,6 +23,8 @@
 
 ### More Illustrations
 
+![](assets/banners/ScholArxiv.png)
+![](assets/banners/ScholArxiv2.png)
 ![](assets/banners/ScholArxiv3.png)
 ![](assets/banners/ScholArxiv4.png)
 
