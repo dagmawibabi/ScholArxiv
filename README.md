@@ -5,6 +5,7 @@
 You can [download](https://github.com/dagmawibabi/ScholArxiv/releases/download/v3.0.0/ScholArxiv.apk) the latest version here. Enjoy!
 
 ![](assets/banners/ScholArxiv5.png)
+![](assets/banners/ScholArxiv6.png)
 ![](assets/banners/ScholArxiv7.png)
 
 ### Features
