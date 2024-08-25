@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:arxiv/components/eachPaperCard.dart';
 import 'package:arxiv/components/loadingIndicator.dart';
 import 'package:arxiv/components/searchBox.dart';
+import 'package:arxiv/pages/aiChatPage.dart';
 import 'package:arxiv/pages/bookmarksPage.dart';
 import 'package:arxiv/pages/pdfViewer.dart';
 import 'package:dio/dio.dart';
@@ -23,6 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var sourceCodeURL = "https://github.com/dagmawibabi/ScholArxiv";
   var arxivBaseURL = "http://export.arxiv.org/api/query?search_query=all:";
   int startPagination = 0;
   int maxContent = 30;
@@ -30,52 +32,71 @@ class _HomePageState extends State<HomePage> {
   var arxivBaseLimitURL = "&start=0&max_results=30";
   var pdfBaseURL = "https://arxiv.org/pdf";
   List suggestions = [
-    "attention is all you need",
-    "protein measurement",
-    "relativity",
-    "mathematical theory of communication",
-    "molecular cloning",
-    "dna sequencing",
-    "mental state",
-    "fuzzy sets",
-    "atheory of justice",
-    "tiered reward",
-    "neural network",
-    "quantum",
-    "emotional",
-    "behavioural",
-    "spiritual",
-    "machine learning",
-    "entanglement",
-    "computer",
-    "robotics",
-    "books",
-    "reading",
-    "higgs boson",
-    "black hole",
-    "planet",
-    "rocket",
-    "hands",
-    "brain",
     "acid",
-    "identity",
-    "psychology",
+    "atheory of justice",
+    "attention is all you need",
+    "augmented",
+    "behavioural",
+    "books",
+    "black hole",
+    "brain",
     "cats",
-    "spider",
+    "computer",
+    "creative",
     "dog",
+    "dna sequencing",
+    "dysonsphere",
+    "ecg",
+    "emotional",
+    "entanglement",
     "fear",
+    "fuzzy sets",
+    "fidgeting",
+    "glucose",
+    "garbage",
+    "gonad",
+    "hands",
+    "heart",
+    "higgs boson",
+    "hydron",
+    "identity",
+    "industrial",
+    "isolation",
+    "laptop",
     "love",
-    "relationship",
+    "labratory",
+    "machine learning",
+    "mathematical theory of communication",
+    "mental state",
     "micro",
     "microchip",
-    "supher",
-    "volcano",
-    "heart",
-    "ecg",
     "mobile",
-    "laptop",
+    "molecular cloning",
+    "neural network",
+    "negative",
+    "numbers",
     "pc",
+    "planet",
+    "protein measurement",
+    "psychology",
+    "quantum",
+    "quasar",
+    "qubit",
+    "reading",
+    "relationship",
+    "relativity",
+    "robotics",
+    "rocket",
     "sitting",
+    "spider",
+    "spiritual",
+    "sulpher",
+    "television",
+    "tiered reward",
+    "transport",
+    "virtual reality",
+    "volcano",
+    "vision",
   ];
 
   var isHomeScreenLoading = true;
@@ -192,18 +213,7 @@ class _HomePageState extends State<HomePage> {
           "ScholArxiv",
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              ThemeProvider.controllerOf(context).nextTheme();
-            },
-            icon: Icon(
-              ThemeProvider.themeOf(context).id == "light_theme"
-                  ? Icons.dark_mode_outlined
-                  : ThemeProvider.themeOf(context).id == "dark_theme"
-                      ? Icons.sunny_snowing
-                      : Ionicons.sunny,
-            ),
-          ),
+          // BOOKMARKS
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -220,6 +230,37 @@ class _HomePageState extends State<HomePage> {
               Icons.bookmark_border_outlined,
             ),
           ),
+          // CHANGE THEME
+          IconButton(
+            onPressed: () {
+              ThemeProvider.controllerOf(context).nextTheme();
+            },
+            icon: Icon(
+              ThemeProvider.themeOf(context).id == "light_theme"
+                  ? Icons.dark_mode_outlined
+                  : ThemeProvider.themeOf(context).id == "dark_theme"
+                      ? Icons.sunny_snowing
+                      : Ionicons.sunny,
+            ),
+          ),
+
+          // CHAT WITH AI
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AIChatPage(
+                    paperData: "",
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.auto_awesome_outlined,
+            ),
+          ),
+          const SizedBox(width: 10.0),
         ],
       ),
       body: LiquidPullToRefresh(
@@ -267,7 +308,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Pagination
-            data.isNotEmpty
+            data.isNotEmpty && searchTermController.text.trim() != ""
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -309,7 +350,7 @@ class _HomePageState extends State<HomePage> {
 
             Container(
               width: 100.0,
-              padding: const EdgeInsets.only(top: 200.0, bottom: 20.0),
+              padding: const EdgeInsets.only(top: 200.0, bottom: 40.0),
               child: Center(
                 child: Text(
                   "Thank you to arXiv for use of its \nopen access interoperability.",
@@ -322,15 +363,35 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Center(
-              child: Text(
-                "Made with 🤍 by Dream Intelligence",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey[500]!,
-                  fontSize: 12.0,
+              child: GestureDetector(
+                onTap: () {
+                  launchUrl(Uri.parse(sourceCodeURL));
+                },
+                child: const Text(
+                  "View Source Code on GitHub",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 12.0,
+                  ),
                 ),
               ),
             ),
+
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(
+                  "Made with 🤍 by Dream Intelligence",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey[600]!,
+                    fontSize: 12.0,
+                  ),
+                ),
+              ),
+            ),
+
             const SizedBox(
               height: 20.0,
             ),

@@ -49,6 +49,10 @@ class _MyAppState extends State<MyApp> {
             iconTheme: const IconThemeData(
               color: Colors.black,
             ),
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+            ),
           ),
         ),
         AppTheme(

@@ -21,7 +21,7 @@ class _SearchBoxState extends State<SearchBox> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        left: 30.0,
+        left: 10.0,
         right: 10.0,
       ),
       margin: const EdgeInsets.only(
@@ -33,29 +33,42 @@ class _SearchBoxState extends State<SearchBox> {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              controller: widget.searchTermController,
-              keyboardType: TextInputType.url,
-              cursorColor: ThemeProvider.themeOf(context).id == "mixed_theme"
-                  ? Colors.white
-                  : ThemeProvider.themeOf(context)
-                      .data
-                      .textTheme
-                      .bodyLarge
-                      ?.color,
-              style: TextStyle(
-                color: ThemeProvider.themeOf(context).id == "light_theme"
-                    ? Colors.black
-                    : Colors.white,
+            child: Container(
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0),
+                color: ThemeProvider.themeOf(context)
+                        .data
+                        .textTheme
+                        .bodyLarge
+                        ?.color
+                        ?.withAlpha(12) ??
+                    Colors.grey[100],
               ),
-              decoration: InputDecoration(
-                hintText: "Search...",
-                hintStyle: TextStyle(color: Colors.grey[700]),
-                border: InputBorder.none,
+              child: TextField(
+                controller: widget.searchTermController,
+                keyboardType: TextInputType.url,
+                cursorColor: ThemeProvider.themeOf(context).id == "mixed_theme"
+                    ? Colors.white
+                    : ThemeProvider.themeOf(context)
+                        .data
+                        .textTheme
+                        .bodyLarge
+                        ?.color,
+                style: TextStyle(
+                  color: ThemeProvider.themeOf(context).id == "light_theme"
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Search...",
+                  hintStyle: TextStyle(color: Colors.grey[700]),
+                  border: InputBorder.none,
+                ),
+                onSubmitted: (searchTerm) {
+                  widget.searchFunction(resetPagination: true);
+                },
               ),
-              onSubmitted: (searchTerm) {
-                widget.searchFunction(resetPagination: true); 
-              },
             ),
           ),
           IconButton(
