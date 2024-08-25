@@ -23,13 +23,6 @@ You can [download](https://github.com/dagmawibabi/ScholArxiv/releases/download/v
 
 ☀️ **Themes**: There are three available themes to make browsing and discovering papers comfortable. Light mode, dark mode and mixed mode.
 
-### More Illustrations
-
-![](assets/banners/ScholArxiv.png)
-![](assets/banners/ScholArxiv2.png)
-![](assets/banners/ScholArxiv3.png)
-![](assets/banners/ScholArxiv4.png)
-
 ### Contribution
 
 You can help support the project in three ways. ✨
@@ -43,6 +36,13 @@ You can help support the project in three ways. ✨
 1. By Sharing this Project to your friends and community
 
 You can use the issues tab to get inspiration.
+
+### More Illustrations
+
+![](assets/banners/ScholArxiv.png)
+![](assets/banners/ScholArxiv2.png)
+![](assets/banners/ScholArxiv3.png)
+![](assets/banners/ScholArxiv4.png)
 
 ### License
 
