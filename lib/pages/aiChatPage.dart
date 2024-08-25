@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:arxiv/components/apiSettings.dart';
 import 'package:arxiv/components/eachChatMessage.dart';
 import 'package:arxiv/components/promptSuggestions.dart';
@@ -57,7 +59,9 @@ class _AIChatPageState extends State<AIChatPage> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   void chatWithAI() async {
@@ -141,7 +145,7 @@ class _AIChatPageState extends State<AIChatPage> {
 
   void getToggleTools() async {
     Box toolsBox = await Hive.openBox("toolsBox");
-    toolsOn = await toolsBox.get("toolsBox") ?? "";
+    toolsOn = await toolsBox.get("toolsBox") ?? true;
     await Hive.close();
     setState(() {});
   }
@@ -283,7 +287,7 @@ class _AIChatPageState extends State<AIChatPage> {
           ),
           // Chat Box and Send Button
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 8.0, top: 8.0),
             child: Row(
               children: [
                 Expanded(
@@ -326,17 +330,20 @@ class _AIChatPageState extends State<AIChatPage> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    apiKey == "" ? () {} : chatWithAI();
-                  },
-                  icon: Icon(
-                    Icons.send_outlined,
-                    color: ThemeProvider.themeOf(context)
-                        .data
-                        .textTheme
-                        .bodyLarge
-                        ?.color,
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    onPressed: () {
+                      apiKey == "" ? () {} : chatWithAI();
+                    },
+                    icon: Icon(
+                      Ionicons.paper_plane_outline,
+                      color: ThemeProvider.themeOf(context)
+                          .data
+                          .textTheme
+                          .bodyLarge
+                          ?.color,
+                    ),
                   ),
                 ),
               ],
