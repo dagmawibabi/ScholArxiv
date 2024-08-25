@@ -313,7 +313,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
                   );
                 },
                 icon: Icon(
-                  Icons.memory_outlined,
+                  Icons.auto_awesome_outlined,
                   color: ThemeProvider.themeOf(context)
                       .data
                       .textTheme
