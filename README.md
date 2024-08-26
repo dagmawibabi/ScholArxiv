@@ -22,9 +22,9 @@
 
 <!-- Center Aligned the images in one row -->
 <div align="center">
-<img src="assets/banners/ScholArxiv5.png" width="250">
-<img src="assets/banners/ScholArxiv6.png" width="300">
-<img src="assets/banners/ScholArxiv7.png" width="250">
+<img src="assets/banners/ScholArxiv5.png" width="375">
+<img src="assets/banners/ScholArxiv6.png" width="475">
+<img src="assets/banners/ScholArxiv7.png" width="375">
 </div>
 
 <!-- ![](assets/banners/ScholArxiv5.png)
@@ -67,11 +67,11 @@ You can use the issues tab to get inspiration.
 <!-- Center Aligned the images in one row -->
 
 <div align="center">
-<img src="assets/banners/ScholArxiv.png" width="400">
-<img src="assets/banners/ScholArxiv2.png" width="400">
+<img src="assets/banners/ScholArxiv.png" width="475">
+<img src="assets/banners/ScholArxiv2.png" width="475">
 
-<img src="assets/banners/ScholArxiv3.png" width="400">
-<img src="assets/banners/ScholArxiv4.png" width="400">
+<img src="assets/banners/ScholArxiv3.png" width="475">
+<img src="assets/banners/ScholArxiv4.png" width="475">
 </div>
 
 <!-- 
