@@ -22,9 +22,10 @@
 
 <!-- Center Aligned the images in one row -->
 <div align="center">
-<img src="assets/banners/ScholArxiv5.png" width="300">
-<img src="assets/banners/ScholArxiv6.png" width="350">
-<img src="assets/banners/ScholArxiv7.png" width="300">
+<img src="assets/banners/ScholArxiv5.png" width="400">
+<img src="assets/banners/ScholArxiv6.png" width="400">
+
+<img src="assets/banners/ScholArxiv7.png" width="400">
 </div>
 
 <!-- ![](assets/banners/ScholArxiv5.png)
