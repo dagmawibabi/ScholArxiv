@@ -1,18 +1,42 @@
+<img src="assets/banners/ScholArxivLogo.png">
+
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dagmawibabi/)
+[![YouTube](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/dagmawibabi)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:1babidagi@gmail.com)
+
 # ScholArxiv
 
+### 🤖 Your AI-powered arXiv assistant, helping you explore and understand academic papers with ease.
+
+</div>
+
+<br />
+
+## Description
 **ScholArxiv** is an open-source aesthetic and minimal app that allows users to search, read, bookmark, share, download and view summaries of academic papers from the arXiv repository. Now you can configure your Gemini API key and converse with AI to expand and dive deeper into the papers you're exploring.
 
-You can [download](https://github.com/dagmawibabi/ScholArxiv/releases/download/v3.0.0/ScholArxiv.apk) the latest version here. Enjoy!
+**[⬇️ Download Now](https://github.com/dagmawibabi/ScholArxiv/releases/download/v3.0.0/ScholArxiv.apk)** for the Latest Version. Enjoy!
 
-![](assets/banners/ScholArxiv5.png)
+
+<!-- Center Aligned the images in one row -->
+<div align="center">
+<img src="assets/banners/ScholArxiv5.png" width="250">
+<img src="assets/banners/ScholArxiv6.png" width="300">
+<img src="assets/banners/ScholArxiv7.png" width="250">
+</div>
+
+<!-- ![](assets/banners/ScholArxiv5.png)
 ![](assets/banners/ScholArxiv6.png)
-![](assets/banners/ScholArxiv7.png)
+![](assets/banners/ScholArxiv7.png) -->
 
-### Features
+
+## 💰 Features
+
+✨ **AI Chat**: Use *AI Chat* to delve deeper and understand papers.
 
 📚 **Read Papers**: Read entire papers in detail within the app.
-
-✨ **AI Chat**: You can chat with AI to delve deeper and understand papers.
 
 🔖 **Bookmarks**: Save your favorite papers for quick access.
 
@@ -20,11 +44,11 @@ You can [download](https://github.com/dagmawibabi/ScholArxiv/releases/download/v
 
 🔎 **Search Papers**: Search for papers using keywords, titles, authors and abstract. If no keyword is provided the app suggests random popular papers.
 
-⬇️ **Download and Share Papers**: Download papers for offline reading or you can share document links to others.
+⬇️ **Download and Share**: Download papers for offline reading or you can share document links to others.
 
 ☀️ **Themes**: There are three available themes to make browsing and discovering papers comfortable. Light mode, dark mode and mixed mode.
 
-### Contribution
+## Contribution
 
 You can help support the project in three ways. ✨
 
@@ -38,18 +62,29 @@ You can help support the project in three ways. ✨
 
 You can use the issues tab to get inspiration.
 
-### More Illustrations
+## More Illustrations
 
+<!-- Center Aligned the images in one row -->
+
+<div align="center">
+<img src="assets/banners/ScholArxiv.png" width="400">
+<img src="assets/banners/ScholArxiv2.png" width="400">
+
+<img src="assets/banners/ScholArxiv3.png" width="400">
+<img src="assets/banners/ScholArxiv4.png" width="400">
+</div>
+
+<!-- 
 ![](assets/banners/ScholArxiv.png)
 ![](assets/banners/ScholArxiv2.png)
 ![](assets/banners/ScholArxiv3.png)
-![](assets/banners/ScholArxiv4.png)
+![](assets/banners/ScholArxiv4.png) -->
 
-### License
+## License
 
 This project is licensed under the GNU General Public License. You can make any contribution and distribute as long as your preleases are also open source - see the LICENSE file for details.
 
-### Acknowledgements
+## Acknowledgements
 
 Thank you to arXiv for the use of its open access interoperability.
 
