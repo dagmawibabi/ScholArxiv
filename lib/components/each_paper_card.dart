@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
-import 'package:arxiv/components/idAndDate.dart';
-import 'package:arxiv/components/summaryBottomSheet.dart';
-import 'package:arxiv/pages/aiChatPage.dart';
+import 'package:arxiv/components/id_and_date.dart';
+import 'package:arxiv/components/summary_bottom_sheet.dart';
+import 'package:arxiv/pages/ai_chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 import 'package:hive/hive.dart';

@@ -7,7 +7,7 @@ import 'package:flutter_tex/flutter_tex.dart';
 import 'package:hive/hive.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'package:arxiv/components/eachPaperCard.dart';
+import 'package:arxiv/components/each_paper_card.dart';
 
 class FullScreenSummaryPage extends StatefulWidget {
   const FullScreenSummaryPage({
@@ -205,29 +205,27 @@ class _FullScreenSummaryPageState extends State<FullScreenSummaryPage> {
               right: 20.0,
             ),
             child: containsLatex(summary)
-                          ? TeXView(
-                              child: TeXViewDocument(
-                                summary,
-                                style: TeXViewStyle(
-                                  contentColor: ThemeProvider.themeOf(context)
-                                      .data
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color,
-                                  textAlign: TeXViewTextAlign.left,
-                                  fontStyle: TeXViewFontStyle(
-                                    fontSize: 17,
-                                    fontWeight: TeXViewFontWeight.normal
-                              ),
-                            ),
-                          ),
-                        )
-                          : SelectableText(
-                              summary,
-                              style: const TextStyle(
-                                fontSize: 17.0,
-                              ),
-                            ),
+                ? TeXView(
+                    child: TeXViewDocument(
+                      summary,
+                      style: TeXViewStyle(
+                        contentColor: ThemeProvider.themeOf(context)
+                            .data
+                            .textTheme
+                            .bodyLarge
+                            ?.color,
+                        textAlign: TeXViewTextAlign.left,
+                        fontStyle: TeXViewFontStyle(
+                            fontSize: 17, fontWeight: TeXViewFontWeight.normal),
+                      ),
+                    ),
+                  )
+                : SelectableText(
+                    summary,
+                    style: const TextStyle(
+                      fontSize: 17.0,
+                    ),
+                  ),
           ),
         ],
       ),

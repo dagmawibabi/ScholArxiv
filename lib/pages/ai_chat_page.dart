@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
-import 'package:arxiv/components/apiSettings.dart';
-import 'package:arxiv/components/eachChatMessage.dart';
-import 'package:arxiv/components/promptSuggestions.dart';
+import 'package:arxiv/components/api_settings.dart';
+import 'package:arxiv/components/each_chat_message.dart';
+import 'package:arxiv/components/prompt_suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive/hive.dart';

@@ -1,5 +1,5 @@
 import "package:arxiv/models/bookmarks.dart";
-import "package:arxiv/pages/homePage.dart";
+import "package:arxiv/pages/home_page.dart";
 import "package:flutter/material.dart";
 import "package:hive_flutter/hive_flutter.dart";
 import 'package:theme_provider/theme_provider.dart';
