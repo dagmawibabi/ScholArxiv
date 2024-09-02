@@ -191,7 +191,7 @@ class _AIChatPageState extends State<AIChatPage> {
   Future<String> fromTemplateFile(
       String fileName, Map<String, dynamic> substitutes) async {
     var template = await rootBundle.loadString(fileName);
-    return template.splitMapJoin(new RegExp('{{.*?}}'),
+    return template.splitMapJoin(RegExp('{{.*?}}'),
         onMatch: (m) => substitutes[getPlaceholderName(m.group(0))] ?? '');
   }
 
