@@ -179,12 +179,12 @@ class _AIChatPageState extends State<AIChatPage> {
     };
 
     systemPrompt = await fromTemplateFile(
-        'system_message_templates/model.txt', substitutes);
+        'assets/system_message_templates/model.txt', substitutes);
   }
 
   void setupGeneralSystemMessage() async {
-    systemPrompt =
-        await fromTemplateFile('system_message_templates/general.txt', {});
+    systemPrompt = await fromTemplateFile(
+        'assets/system_message_templates/general.txt', {});
   }
 
   /// Interpolates values to a text read from a file. The format for a placeholder is {{some_name}}.
