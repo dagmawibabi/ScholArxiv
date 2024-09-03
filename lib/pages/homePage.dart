@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
-import 'dart:convert';
 import 'dart:math';
+
+import 'package:arxiv/apis/arxiv.dart';
 import 'package:arxiv/components/eachPaperCard.dart';
 import 'package:arxiv/components/loadingIndicator.dart';
 import 'package:arxiv/components/searchBox.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:xml2json/xml2json.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -25,117 +25,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var sourceCodeURL = "https://github.com/dagmawibabi/ScholArxiv";
-  var arxivBaseURL = "http://export.arxiv.org/api/query?search_query=all:";
   int startPagination = 0;
   int maxContent = 30;
   int paginationGap = 30;
-  var arxivBaseLimitURL = "&start=0&max_results=30";
   var pdfBaseURL = "https://arxiv.org/pdf";
-  List suggestions = [
-    "acid",
-    "atheory of justice",
-    "attention is all you need",
-    "augmented",
-    "behavioural",
-    "books",
-    "black hole",
-    "brain",
-    "cats",
-    "computer",
-    "creative",
-    "dog",
-    "dna sequencing",
-    "dysonsphere",
-    "ecg",
-    "emotional",
-    "entanglement",
-    "fear",
-    "fuzzy sets",
-    "fidgeting",
-    "glucose",
-    "garbage",
-    "gonad",
-    "hands",
-    "heart",
-    "higgs boson",
-    "hydron",
-    "identity",
-    "industrial",
-    "isolation",
-    "laptop",
-    "love",
-    "labratory",
-    "machine learning",
-    "mathematical theory of communication",
-    "mental state",
-    "micro",
-    "microchip",
-    "mobile",
-    "molecular cloning",
-    "neural network",
-    "negative",
-    "numbers",
-    "pc",
-    "planet",
-    "protein measurement",
-    "psychology",
-    "quantum",
-    "quasar",
-    "qubit",
-    "reading",
-    "relationship",
-    "relativity",
-    "robotics",
-    "rocket",
-    "sitting",
-    "spider",
-    "spiritual",
-    "sulpher",
-    "television",
-    "tiered reward",
-    "transport",
-    "virtual reality",
-    "volcano",
-    "vision",
-  ];
 
   var isHomeScreenLoading = true;
   TextEditingController searchTermController = TextEditingController();
 
   var dio = Dio();
-  final xml2json = Xml2Json();
   List data = [];
 
   Future<void> search({bool? resetPagination}) async {
     if (resetPagination == true) {
       startPagination = 0;
     }
-    arxivBaseLimitURL = "&start=$startPagination&max_results=$maxContent";
     isHomeScreenLoading = true;
     data = [];
     setState(() {});
 
-    Response result;
     var searchTerm = searchTermController.text.toString().trim();
-    if (searchTerm == "" || searchTerm == " ") {
-      Random random = Random();
-      int randomIndex = random.nextInt(suggestions.length);
-      String randomItem = suggestions[randomIndex];
-      int pageJump = random.nextInt(3) + random.nextInt(2);
-      startPagination += paginationGap * pageJump;
-
-      result = await dio.get("$arxivBaseURL$randomItem$arxivBaseLimitURL");
+    if (searchTerm.isNotEmpty) {
+      data = await Arxiv.search(
+        searchTerm,
+        page: startPagination,
+        pageSize: maxContent,
+      );
     } else {
-      result = await dio.get("$arxivBaseURL$searchTerm$arxivBaseLimitURL");
-    }
-    xml2json.parse(result.data);
-    var jsonString = xml2json.toParker();
-    var jsonObject = await json.decode(jsonString);
-
-    try {
-      data = jsonObject["feed"]["entry"];
-    } catch (e) {
-      data = [];
+      data = await Arxiv.suggest(pageSize: maxContent);
     }
 
     isHomeScreenLoading = false;
