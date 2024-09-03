@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-import 'package:arxiv/pages/fullScreenSummaryPage.dart';
+import 'package:arxiv/pages/full_screen_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -7,7 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'package:arxiv/components/eachPaperCard.dart';
+import 'package:arxiv/components/each_paper_card.dart';
 
 class SummaryBottomSheet extends StatefulWidget {
   const SummaryBottomSheet({
@@ -101,7 +101,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
         .trim()
         .replaceAll(RegExp(r'\\n'), ' ')
         .replaceAll(RegExp(r'\\'), '');
-    if (containsLatex(summary)) { 
+    if (containsLatex(summary)) {
       summary = summary.replaceAll(RegExp(r'\$ '), r' \) ');
       summary = summary.replaceAll(RegExp(r' \$'), r' \( ');
       summary = summary.replaceAll(r'$', r' \) ');
@@ -277,37 +277,35 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        top: 10.0,
-                        bottom: 100.0,
-                      ),
-                      child: (containsLatex(summary)
-                          ? TeXView(
-                              child: TeXViewDocument(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                          top: 10.0,
+                          bottom: 100.0,
+                        ),
+                        child: (containsLatex(summary)
+                            ? TeXView(
+                                child: TeXViewDocument(
+                                  summary,
+                                  style: TeXViewStyle(
+                                    contentColor: ThemeProvider.themeOf(context)
+                                        .data
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.color,
+                                    textAlign: TeXViewTextAlign.left,
+                                    fontStyle: TeXViewFontStyle(
+                                        fontSize: 15,
+                                        fontWeight: TeXViewFontWeight.normal),
+                                  ),
+                                ),
+                              )
+                            : SelectableText(
                                 summary,
-                                style: TeXViewStyle(
-                                  contentColor: ThemeProvider.themeOf(context)
-                                      .data
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color,
-                                  textAlign: TeXViewTextAlign.left,
-                                  fontStyle: TeXViewFontStyle(
-                                    fontSize: 15,
-                                    fontWeight: TeXViewFontWeight.normal
-                              ),
-                            ),
-                          ),
-                        )
-                          : SelectableText(
-                              summary,
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            )
-                    )),
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ))),
                   ],
                 ),
               ),
