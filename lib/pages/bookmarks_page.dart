@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
-import 'package:arxiv/components/eachPaperCard.dart';
-import 'package:arxiv/components/loadingIndicator.dart';
+import 'package:arxiv/components/each_paper_card.dart';
+import 'package:arxiv/components/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
