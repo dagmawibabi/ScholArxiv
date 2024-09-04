@@ -18,6 +18,24 @@ class SearchBox extends StatefulWidget {
 
 class _SearchBoxState extends State<SearchBox> {
   @override
+  void initState() {
+    super.initState();
+    widget.searchTermController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.searchTermController.dispose();
+    super.dispose();
+  }
+
+  void clearSearchQuery() {
+    widget.searchTermController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
@@ -64,6 +82,18 @@ class _SearchBoxState extends State<SearchBox> {
                   hintText: "Search...",
                   hintStyle: TextStyle(color: Colors.grey[700]),
                   border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                  suffixIcon: widget.searchTermController.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: () {
+                            clearSearchQuery();
+                          },
+                          icon: const Icon(
+                            Icons.clear,
+                            color: Colors.grey,
+                          ),
+                        )
+                      : null,
                 ),
                 onSubmitted: (searchTerm) {
                   widget.searchFunction(resetPagination: true);
