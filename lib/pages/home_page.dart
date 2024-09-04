@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 import 'dart:convert';
 import 'dart:math';
-import 'package:arxiv/components/eachPaperCard.dart';
-import 'package:arxiv/components/loadingIndicator.dart';
-import 'package:arxiv/components/searchBox.dart';
-import 'package:arxiv/pages/aiChatPage.dart';
-import 'package:arxiv/pages/bookmarksPage.dart';
-import 'package:arxiv/pages/pdfViewer.dart';
+import 'package:arxiv/components/each_paper_card.dart';
+import 'package:arxiv/components/loading_indicator.dart';
+import 'package:arxiv/components/search_box.dart';
+import 'package:arxiv/pages/ai_chat_page.dart';
+import 'package:arxiv/pages/bookmarks_page.dart';
+import 'package:arxiv/pages/pdf_viewer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
