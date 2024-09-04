@@ -84,7 +84,7 @@ class _APISettingsState extends State<APISettings> {
             ),
             child: TextField(
               controller: apiKeyController,
-              cursorColor: ThemeProvider.themeOf(context).id == "mixed_theme"
+              cursorColor: ThemeProvider.themeOf(context).id == "dark_theme"
                   ? Colors.white
                   : ThemeProvider.themeOf(context)
                       .data

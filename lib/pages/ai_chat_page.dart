@@ -330,7 +330,7 @@ class _AIChatPageState extends State<AIChatPage> {
                       controller: userMessageController,
                       enabled: !(apiKeySettingsOn == true),
                       cursorColor:
-                          ThemeProvider.themeOf(context).id == "mixed_theme"
+                          ThemeProvider.themeOf(context).id == "dark_theme"
                               ? Colors.white
                               : ThemeProvider.themeOf(context)
                                   .data
