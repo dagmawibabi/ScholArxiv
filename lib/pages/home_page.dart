@@ -3,6 +3,7 @@ import 'package:arxiv/apis/arxiv.dart';
 import 'package:arxiv/components/each_paper_card.dart';
 import 'package:arxiv/components/loading_indicator.dart';
 import 'package:arxiv/components/search_box.dart';
+import 'package:arxiv/models/paper.dart';
 import 'package:arxiv/pages/ai_chat_page.dart';
 import 'package:arxiv/pages/bookmarks_page.dart';
 import 'package:arxiv/pages/pdf_viewer.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController searchTermController = TextEditingController();
 
   var dio = Dio();
-  List data = [];
+  List<Paper> data = [];
 
   Future<void> search({bool? resetPagination}) async {
     if (resetPagination == true) {

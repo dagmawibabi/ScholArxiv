@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:arxiv/components/id_and_date.dart';
 import 'package:arxiv/components/summary_bottom_sheet.dart';
+import 'package:arxiv/models/paper.dart';
 import 'package:arxiv/pages/ai_chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -23,7 +24,7 @@ class EachPaperCard extends StatefulWidget {
     required this.isBookmarked,
   });
 
-  final dynamic eachPaper;
+  final Paper eachPaper;
   final Function downloadPaper;
   final Function parseAndLaunchURL;
   final bool isBookmarked;
@@ -72,7 +73,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
       List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
       List newBookmarks = [];
       for (var eachBookmark in bookmarks) {
-        if (eachBookmark["id"] != widget.eachPaper["id"]) {
+        if (eachBookmark.id != widget.eachPaper.id) {
           newBookmarks.add(eachBookmark);
         }
       }
@@ -88,12 +89,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
     List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
     await Hive.close();
 
-    for (var eachBookmark in bookmarks) {
-      if (eachBookmark["id"] == widget.eachPaper["id"]) {
-        isBookmarked = true;
-        break;
-      }
-    }
+    isBookmarked = bookmarks.where((bookmark) => bookmark.id == widget.eachPaper.id).isNotEmpty;
     setState(() {});
   }
 
@@ -105,7 +101,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
 
   @override
   Widget build(BuildContext context) {
-    String title = widget.eachPaper["title"]
+    String title = widget.eachPaper.title
         .toString()
         .replaceAll(RegExp(r'\\n'), '')
         .replaceAll(RegExp(r'\\ '), '');
@@ -144,17 +140,17 @@ class _EachPaperCardState extends State<EachPaperCard> {
         children: [
           // ID and Published Date
           IDAndDate(
-            id: widget.eachPaper["id"].toString().substring(
-                widget.eachPaper["id"].lastIndexOf("/") + 1,
-                widget.eachPaper["id"].length),
-            date: widget.eachPaper["published"].toString().substring(0, 10),
+            id: widget.eachPaper.id.substring(
+                widget.eachPaper.id.lastIndexOf("/") + 1,
+                widget.eachPaper.id.length),
+            date: widget.eachPaper.publishedAt.substring(0, 10),
           ),
 
           // TITLE
           GestureDetector(
             onTap: () => widget.parseAndLaunchURL(
-              widget.eachPaper["id"].toString(),
-              widget.eachPaper["title"].toString(),
+              widget.eachPaper.id,
+              widget.eachPaper.title,
             ),
             child: Container(
               padding: const EdgeInsets.only(bottom: 5.0),
@@ -187,7 +183,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
             child: Text(
-              "Published: ${widget.eachPaper["published"].toString().substring(0, 10)}",
+              "Published: ${widget.eachPaper.publishedAt.toString().substring(0, 10)}",
               style: const TextStyle(
                 fontSize: 12.0,
               ),
@@ -196,7 +192,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Text(
-              "Authors: ${widget.eachPaper["author"].toString().replaceAll("name:", "").replaceAll(RegExp("[\\[\\]\\{\\}]"), "")}",
+              "Authors: ${widget.eachPaper.authors}",
               style: const TextStyle(
                 fontSize: 13.0,
               ),
@@ -274,7 +270,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
               IconButton(
                 onPressed: () {
                   shareLink(
-                    widget.eachPaper["id"].toString(),
+                    widget.eachPaper.id,
                   );
                 },
                 icon: Icon(
@@ -289,7 +285,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
               IconButton(
                 onPressed: () {
                   widget.downloadPaper(
-                    widget.eachPaper["id"].toString(),
+                    widget.eachPaper.id,
                   );
                 },
                 icon: Icon(

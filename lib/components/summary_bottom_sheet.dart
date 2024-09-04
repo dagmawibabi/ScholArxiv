@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:arxiv/models/paper.dart';
 import 'package:arxiv/pages/full_screen_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -16,7 +17,7 @@ class SummaryBottomSheet extends StatefulWidget {
     required this.parseAndLaunchURL,
   });
 
-  final dynamic paperData;
+  final Paper paperData;
   final Function parseAndLaunchURL;
 
   @override
@@ -86,7 +87,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
       isSpeaking = false;
       setState(() {});
     });
-    summary = widget.paperData["summary"]
+    summary = widget.paperData.summary
         .trim()
         .replaceAll(RegExp(r'\\n'), ' ')
         .replaceAll(
@@ -97,7 +98,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    String summary = widget.paperData["summary"]
+    String summary = widget.paperData.summary
         .trim()
         .replaceAll(RegExp(r'\\n'), ' ')
         .replaceAll(RegExp(r'\\'), '');
@@ -240,8 +241,8 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                             child: IconButton(
                               onPressed: () {
                                 widget.parseAndLaunchURL(
-                                  widget.paperData["id"].toString(),
-                                  widget.paperData["title"].toString(),
+                                  widget.paperData.id,
+                                  widget.paperData.title,
                                 );
                               },
                               icon: const Icon(

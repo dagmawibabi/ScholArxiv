@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:arxiv/models/paper.dart';
 import 'package:dio/dio.dart';
 import 'package:xml2json/xml2json.dart';
 
@@ -79,7 +80,7 @@ class Arxiv {
 
   /// Fetches papers for the requested [term].
   /// [page] and [pageSize] are optional. If missing, 0 and 30 are used as defaults respectively.
-  static Future<List<dynamic>> search(
+  static Future<List<Paper>> search(
     String term, {
     int page = 0,
     int pageSize = 30,
@@ -92,14 +93,14 @@ class Arxiv {
       );
       xml2json.parse(response.data);
       var jsonData = await json.decode(xml2json.toParker());
-      return jsonData["feed"]["entry"];
+      return jsonData["feed"]["entry"].map<Paper>((entry) => Paper.fromJson(entry)).toList();
     } catch (e) {
       return [];
     }
   }
 
   /// Fetches papers for a random topic.
-  static Future<List<dynamic>> suggest({int pageSize = 30}) {
+  static Future<List<Paper>> suggest({int pageSize = 30}) {
     Random random = Random();
     int randomIndex = random.nextInt(_topics.length);
     String topic = _topics[randomIndex];

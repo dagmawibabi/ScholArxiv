@@ -1,4 +1,5 @@
 import "package:arxiv/models/bookmarks.dart";
+import "package:arxiv/models/paper.dart";
 import "package:arxiv/pages/home_page.dart";
 import "package:flutter/material.dart";
 import "package:hive_flutter/hive_flutter.dart";
@@ -8,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(BookmarkAdapter());
+  Hive.registerAdapter(PaperAdapter());
   runApp(const MyApp());
 }
 
