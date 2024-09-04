@@ -8,17 +8,13 @@
 
 # ScholArxiv
 
-### 🤖 Your AI-powered arXiv assistant, helping you explore and understand academic papers with ease.
-
 </div>
 
 <br />
 
-## Description
 **ScholArxiv** is an open-source, aesthetic and minimal app that allows users to search, read, bookmark, share, download and view summaries of academic papers from the arXiv repository. Now you can configure your Gemini API key and converse with AI to expand and dive deeper into the papers you're exploring.
 
 **[⬇️ Download Now](https://github.com/dagmawibabi/ScholArxiv/releases/download/v3.0.0/ScholArxiv.apk)** for the Latest Version. Enjoy!
-
 
 <!-- Center Aligned the images in one row -->
 <div align="center">
@@ -33,10 +29,9 @@
 ![](assets/banners/ScholArxiv6.png)
 ![](assets/banners/ScholArxiv7.png) -->
 
-
 ## 💰 Features
 
-✨ **AI Chat**: Use *AI Chat* to delve deeper and understand papers.
+✨ **AI Chat**: Use _AI Chat_ to delve deeper and understand papers.
 
 📚 **Read Papers**: Read entire papers in detail within the app.
 
@@ -49,6 +44,16 @@
 ⬇️ **Download and Share**: Download papers for offline reading or you can share document links to others.
 
 ☀️ **Themes**: There are three available themes to make browsing and discovering papers comfortable. Light mode, dark mode and mixed mode.
+
+## Support, Shoutouts, Guides, Articles
+
+-   Featured in How To Men's [Best Android Apps (September 2024)](https://youtu.be/rogxS9K26LE?si=1ivVCdYZhGVj3uSF&t=392) Video
+
+-   Featured in InsTech's [1st Edition magazine](linkedin.com/pulse/top-10-latest-under-the-radar-ai-tech-tools-instechs-1st-waleed-zjq2f) and [YouTube Video](https://youtu.be/jFltWTk6YBE?si=PiPN-9tb566ROAiJ&t=216)
+
+-   InnoVirtuoso's wrote a complete [explainer article](https://innovirtuoso.com/technology/exploring-scholarxiv-an-aesthetic-and-minimal-app-for-academic-papers/) about ScholArxiv
+
+-   And Many More! THANK YOU SO MUCH FOR THE SUPPORT!
 
 ## Contribution
 
@@ -75,7 +80,7 @@ You can use the issues tab to get inspiration.
 <img src="assets/banners/ScholArxiv4.png" width="400">
 </div>
 
-<!-- 
+<!--
 ![](assets/banners/ScholArxiv.png)
 ![](assets/banners/ScholArxiv2.png)
 ![](assets/banners/ScholArxiv3.png)

@@ -84,7 +84,7 @@ class _APISettingsState extends State<APISettings> {
             ),
             child: TextField(
               controller: apiKeyController,
-              cursorColor: ThemeProvider.themeOf(context).id == "mixed_theme"
+              cursorColor: ThemeProvider.themeOf(context).id == "dark_theme"
                   ? Colors.white
                   : ThemeProvider.themeOf(context)
                       .data
@@ -92,9 +92,9 @@ class _APISettingsState extends State<APISettings> {
                       .bodyLarge
                       ?.color,
               style: TextStyle(
-                color: ThemeProvider.themeOf(context).id == "light_theme"
-                    ? Colors.black
-                    : Colors.white,
+                color: ThemeProvider.themeOf(context).id == "dark_theme"
+                    ? Colors.white
+                    : Colors.black,
               ),
               decoration: InputDecoration(
                 hintText: apiKey == "" ? 'enter API key here..' : apiKey,

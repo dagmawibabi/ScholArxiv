@@ -330,7 +330,7 @@ class _AIChatPageState extends State<AIChatPage> {
                       controller: userMessageController,
                       enabled: !(apiKeySettingsOn == true),
                       cursorColor:
-                          ThemeProvider.themeOf(context).id == "mixed_theme"
+                          ThemeProvider.themeOf(context).id == "dark_theme"
                               ? Colors.white
                               : ThemeProvider.themeOf(context)
                                   .data
@@ -338,10 +338,9 @@ class _AIChatPageState extends State<AIChatPage> {
                                   .bodyLarge
                                   ?.color,
                       style: TextStyle(
-                        color:
-                            ThemeProvider.themeOf(context).id == "light_theme"
-                                ? Colors.black
-                                : Colors.white,
+                        color: ThemeProvider.themeOf(context).id == "dark_theme"
+                            ? Colors.white
+                            : Colors.black,
                       ),
                       decoration: InputDecoration(
                         hintText: widget.paperData == ""
