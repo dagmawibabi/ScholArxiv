@@ -1,12 +1,12 @@
-<div align="center">
-
-# ScholArxiv
-
 <img src="assets/banners/ScholArxivLogo.png">
+
+<div align="center">
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dagmawibabi/)
 [![YouTube](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/dagmawibabi)
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:1babidagi@gmail.com)
+
+# ScholArxiv
 
 </div>
 
