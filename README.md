@@ -45,6 +45,16 @@
 
 ☀️ **Themes**: There are three available themes to make browsing and discovering papers comfortable. Light mode, dark mode and mixed mode.
 
+## Support, Shoutouts, Guides, Articles
+
+-   Featured in How To Men's [Best Android Apps (September 2024)](https://youtu.be/rogxS9K26LE?si=1ivVCdYZhGVj3uSF&t=392) Video
+
+-   Featured in InsTech's [1st Edition magazine](linkedin.com/pulse/top-10-latest-under-the-radar-ai-tech-tools-instechs-1st-waleed-zjq2f) and [YouTube Video](https://youtu.be/jFltWTk6YBE?si=PiPN-9tb566ROAiJ&t=216)
+
+-   InnoVirtuoso's wrote a complete [explainer article](https://innovirtuoso.com/technology/exploring-scholarxiv-an-aesthetic-and-minimal-app-for-academic-papers/) about ScholArxiv
+
+-   And Many More! THANK YOU SO MUCH FOR THE SUPPORT!
+
 ## Contribution
 
 You can help support the project in three ways. ✨
