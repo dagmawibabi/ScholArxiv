@@ -61,17 +61,24 @@ class _EachPaperCardState extends State<EachPaperCard> {
 
   void bookmarkToggle() async {
     await checkIfBookmarked();
-    Box bookmarksBox = await Hive.openBox("bookmarks");
-    List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
-
-    if (isBookmarked) {
-      bookmarks
-          .removeWhere((bookmark) => bookmark["id"] == widget.eachPaper["id"]);
-    } else {
+    if (isBookmarked == false) {
+      Box bookmarksBox = await Hive.openBox("bookmarks");
+      List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
       bookmarks.add(widget.eachPaper);
+      await bookmarksBox.put("bookmarks", bookmarks);
+      await Hive.close();
+    } else {
+      Box bookmarksBox = await Hive.openBox("bookmarks");
+      List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
+      List newBookmarks = [];
+      for (var eachBookmark in bookmarks) {
+        if (eachBookmark["id"] != widget.eachPaper["id"]) {
+          newBookmarks.add(eachBookmark);
+        }
+      }
+      await bookmarksBox.put("bookmarks", newBookmarks);
+      await Hive.close();
     }
-
-    await bookmarksBox.put("bookmarks", bookmarks);
     await checkIfBookmarked();
     setState(() {});
   }
@@ -79,10 +86,14 @@ class _EachPaperCardState extends State<EachPaperCard> {
   Future<void> checkIfBookmarked() async {
     Box bookmarksBox = await Hive.openBox("bookmarks");
     List bookmarks = await bookmarksBox.get("bookmarks") ?? [];
-    isBookmarked =
-        bookmarks.any((bookmark) => bookmark["id"] == widget.eachPaper["id"]);
     await Hive.close();
 
+    for (var eachBookmark in bookmarks) {
+      if (eachBookmark["id"] == widget.eachPaper["id"]) {
+        isBookmarked = true;
+        break;
+      }
+    }
     setState(() {});
   }
 
@@ -250,7 +261,9 @@ class _EachPaperCardState extends State<EachPaperCard> {
                   bookmarkToggle();
                 },
                 icon: Icon(
-                  isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  isBookmarked == false
+                      ? Icons.bookmark_border
+                      : Icons.bookmark,
                   color: ThemeProvider.themeOf(context)
                       .data
                       .textTheme
