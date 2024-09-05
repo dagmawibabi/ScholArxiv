@@ -53,6 +53,7 @@ dependencies:
     flutter_markdown: ^0.7.3+1
     animated_text_kit: ^4.2.2
     loading_animation_widget: ^1.2.1
+    another_flutter_splash_screen: ^1.2.1
 
 dev_dependencies:
     flutter_test:
@@ -99,6 +100,7 @@ flutter:
     # To add assets to your application, add an assets section, like this:
     assets:
         - assets/system_message_templates/
+        - assets/icon/
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
