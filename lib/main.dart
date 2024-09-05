@@ -1,3 +1,4 @@
+import "package:another_flutter_splash_screen/another_flutter_splash_screen.dart";
 import "package:arxiv/models/bookmarks.dart";
 import "package:arxiv/models/paper.dart";
 import "package:arxiv/pages/home_page.dart";
@@ -118,7 +119,24 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeProvider.themeOf(themeContext).data,
             debugShowCheckedModeBanner: false,
             initialRoute: "/",
-            routes: {"/": (context) => const HomePage()},
+            routes: {
+              "/": (context) => FlutterSplashScreen.fadeIn(
+                    backgroundColor: Colors.white,
+                    onInit: () {
+                      debugPrint("On Init");
+                    },
+                    onEnd: () {
+                      debugPrint("On End");
+                    },
+                    childWidget: SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Image.asset("assets/icon/icon.png"),
+                    ),
+                    onAnimationEnd: () => debugPrint("On Fade In End"),
+                    nextScreen: const HomePage(),
+                  )
+            },
           ),
         ),
       ),
