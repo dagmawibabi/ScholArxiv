@@ -51,11 +51,21 @@ class _HomePageState extends State<HomePage> {
         pageSize: maxContent,
       );
     } else {
-      data = await Arxiv.suggest(pageSize: maxContent);
+      data = await suggestedPapers();
     }
 
     isHomeScreenLoading = false;
     setState(() {});
+  }
+
+  Future<List<Paper>> suggestedPapers() async {
+    var maxRetries = 10;
+    List<Paper> suggested = [];
+    while (suggested.isEmpty && maxRetries > 0) {
+      suggested = await Arxiv.suggest(pageSize: maxContent);
+      maxRetries--;
+    }
+    return suggested;
   }
 
   var paperTitle = "";
