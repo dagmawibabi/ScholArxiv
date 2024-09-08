@@ -3,6 +3,7 @@
 import 'package:arxiv/components/api_settings.dart';
 import 'package:arxiv/components/each_chat_message.dart';
 import 'package:arxiv/components/prompt_suggestions.dart';
+import 'package:arxiv/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -25,9 +26,11 @@ class _AIChatPageState extends State<AIChatPage> {
   var apiKey = "";
   var aiResponse = "";
   var systemPrompt = "";
-  List chatList = [];
+  List<ChatMessage> chatList = [];
   var apiKeySettingsOn = false;
   var toolsOn = true;
+
+  final _systemLoadingTrigger = "SYMLOADINGANIMATION";
 
   var paperPromptSuggestions = [
     "Who wrote this paper?",
@@ -70,16 +73,10 @@ class _AIChatPageState extends State<AIChatPage> {
     userMessageController.clear();
 
     if (message != "") {
-      var userResponseObject = {"role": "USER", "content": message};
-      chatList.add(userResponseObject);
-
-      var systemLoadingObject = {
-        "role": "SYSTEM",
-        "content": "SYMLOADINGANIMATION"
-      };
-      chatList.add(systemLoadingObject);
+      chatList.add(ChatMessage(Role.user, message));
+      chatList.add(ChatMessage(Role.system, _systemLoadingTrigger));
       scrollToTheBottom();
-      var aiResponseObject = {};
+      ChatMessage aiResponseObject;
 
       try {
         var model = GenerativeModel(
@@ -100,9 +97,9 @@ class _AIChatPageState extends State<AIChatPage> {
 
         var response = await chat.sendMessage(content);
         aiResponse = response.text?.trim() ?? "";
-        aiResponseObject = {"role": "AI", "content": response.text};
+        aiResponseObject = ChatMessage(Role.ai, aiResponse);
       } catch (e) {
-        aiResponseObject = {"role": "AI", "content": e.toString()};
+        aiResponseObject = ChatMessage(Role.ai, e.toString());
       }
 
       chatList.removeLast();
