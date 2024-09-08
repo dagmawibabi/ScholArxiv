@@ -8,8 +8,6 @@ import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'package:arxiv/components/each_paper_card.dart';
-
 class SummaryBottomSheet extends StatefulWidget {
   const SummaryBottomSheet({
     super.key,
@@ -87,26 +85,12 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
       isSpeaking = false;
       setState(() {});
     });
-    summary = widget.paperData.summary
-        .trim()
-        .replaceAll(RegExp(r'\\n'), ' ')
-        .replaceAll(
-          RegExp(r'\\'),
-          '',
-        );
+    summary = widget.paperData.summary;
   }
 
   @override
   Widget build(BuildContext context) {
-    String summary = widget.paperData.summary
-        .trim()
-        .replaceAll(RegExp(r'\\n'), ' ')
-        .replaceAll(RegExp(r'\\'), '');
-    if (containsLatex(summary)) {
-      summary = summary.replaceAll(RegExp(r'\$ '), r' \) ');
-      summary = summary.replaceAll(RegExp(r' \$'), r' \( ');
-      summary = summary.replaceAll(r'$', r' \) ');
-    }
+    String summary = widget.paperData.summary;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -284,7 +268,7 @@ class _SummaryBottomSheetState extends State<SummaryBottomSheet> {
                           top: 10.0,
                           bottom: 100.0,
                         ),
-                        child: (containsLatex(summary)
+                        child: (Paper.containsLatex(summary)
                             ? TeXView(
                                 child: TeXViewDocument(
                                   summary,

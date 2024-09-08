@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 
 part 'paper.g.dart';
@@ -30,10 +29,24 @@ class Paper {
   }
 
   factory Paper.fromJson(Map<String, dynamic> jsonData) => Paper(
-        jsonData["id"].toString(),
-        jsonData["title"].toString(),
-        jsonData["summary"].toString(),
-        jsonData["published"].toString(),
+        jsonData["id"].toString().substring(
+              jsonData["id"].toString().lastIndexOf("/") + 1,
+              jsonData["id"].toString().length,
+            ),
+        _parseLatex(
+          jsonData["title"]
+              .toString()
+              .replaceAll(RegExp(r'\\n'), '')
+              .replaceAll(RegExp(r'\\ '), ''),
+        ),
+        _parseLatex(
+          jsonData["summary"]
+              .toString()
+              .trim()
+              .replaceAll(RegExp(r'\\n'), ' ')
+              .replaceAll(RegExp(r'\\'), ''),
+        ),
+        jsonData["published"].toString().substring(0, 10),
         jsonData["author"]
             .toString()
             .replaceAll("name:", "")
@@ -47,4 +60,19 @@ class Paper {
         "published": publishedAt,
         "author": authors,
       };
+
+  static bool containsLatex(String title) {
+    final latexRegex = RegExp(r'[$\\{}]');
+    return latexRegex.hasMatch(title);
+  }
+
+  static String _parseLatex(String content) {
+    if (containsLatex(content)) {
+      return content
+          .replaceAll(RegExp(r'\$ '), r' \) ')
+          .replaceAll(RegExp(r' \$'), r' \( ')
+          .replaceAll(r'$', r' \) ');
+    }
+    return content;
+  }
 }

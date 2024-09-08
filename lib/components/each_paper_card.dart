@@ -10,11 +10,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-bool containsLatex(String title) {
-  final latexRegex = RegExp(r'[$\\{}]');
-  return latexRegex.hasMatch(title);
-}
-
 class EachPaperCard extends StatefulWidget {
   const EachPaperCard({
     super.key,
@@ -101,16 +96,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
 
   @override
   Widget build(BuildContext context) {
-    String title = widget.eachPaper.title
-        .toString()
-        .replaceAll(RegExp(r'\\n'), '')
-        .replaceAll(RegExp(r'\\ '), '');
-
-    if (containsLatex(title) == true) {
-      title = title.replaceAll(RegExp(r'\$ '), r' \) ');
-      title = title.replaceAll(RegExp(r' \$'), r' \( ');
-      title = title.replaceAll(r'$', r' \) ');
-    }
+    String title = widget.eachPaper.title;
 
     return Container(
       margin: const EdgeInsets.only(
@@ -140,10 +126,8 @@ class _EachPaperCardState extends State<EachPaperCard> {
         children: [
           // ID and Published Date
           IDAndDate(
-            id: widget.eachPaper.id.substring(
-                widget.eachPaper.id.lastIndexOf("/") + 1,
-                widget.eachPaper.id.length),
-            date: widget.eachPaper.publishedAt.substring(0, 10),
+            id: widget.eachPaper.id,
+            date: widget.eachPaper.publishedAt,
           ),
 
           // TITLE
@@ -154,7 +138,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
             ),
             child: Container(
               padding: const EdgeInsets.only(bottom: 5.0),
-              child: containsLatex(title)
+              child: Paper.containsLatex(title)
                   ? TeXView(
                       child: TeXViewDocument(
                         title,
@@ -183,7 +167,7 @@ class _EachPaperCardState extends State<EachPaperCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
             child: Text(
-              "Published: ${widget.eachPaper.publishedAt.toString().substring(0, 10)}",
+              "Published: ${widget.eachPaper.publishedAt}",
               style: const TextStyle(
                 fontSize: 12.0,
               ),
