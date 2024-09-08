@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:arxiv/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -19,7 +20,7 @@ class EachChatMessage extends StatefulWidget {
     required this.toolsOn,
   });
 
-  final dynamic response;
+  final ChatMessage response;
   final dynamic toolsOn;
 
   @override
@@ -32,13 +33,18 @@ class _EachChatMessageState extends State<EachChatMessage> {
   var speedFactor = 0.1;
   var isSpeaking = false;
 
-  void readReponse() async {
-    var message =
-        widget.response["content"].toString().substring(0, 6) == "SYMMDX"
-            ? widget.response["content"]
-                .toString()
-                .substring(6, widget.response["content"].length)
-            : widget.response["content"];
+  final _markdownPrefix = "SYMMDX";
+
+  bool isMarkdown(String content) {
+    return content.substring(0, 6) == _markdownPrefix;
+  }
+
+  void readResponse() async {
+    var message = isMarkdown(widget.response.content)
+        ? widget.response.content
+            .toString()
+            .substring(6, widget.response.content.length)
+        : widget.response.content;
     if (isSpeaking == false) {
       await tts.setLanguage("en-US");
       tts.setSpeechRate(speedRate);
@@ -51,22 +57,20 @@ class _EachChatMessageState extends State<EachChatMessage> {
   }
 
   void shareResponse() async {
-    var message =
-        widget.response["content"].toString().substring(0, 6) == "SYMMDX"
-            ? widget.response["content"]
-                .toString()
-                .substring(6, widget.response["content"].length)
-            : widget.response["content"];
+    var message = isMarkdown(widget.response.content)
+        ? widget.response.content
+            .toString()
+            .substring(6, widget.response.content.length)
+        : widget.response.content;
     Share.share(message.toString().trim());
   }
 
   void copyResponse() async {
-    var message =
-        widget.response["content"].toString().substring(0, 6) == "SYMMDX"
-            ? widget.response["content"]
-                .toString()
-                .substring(6, widget.response["content"].length)
-            : widget.response["content"];
+    var message = isMarkdown(widget.response.content)
+        ? widget.response.content
+            .toString()
+            .substring(6, widget.response.content.length)
+        : widget.response.content;
     await Clipboard.setData(
       ClipboardData(
         text: message,
@@ -94,7 +98,7 @@ class _EachChatMessageState extends State<EachChatMessage> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: widget.response["role"] == "USER"
+      mainAxisAlignment: widget.response.role == Role.user
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
@@ -104,8 +108,8 @@ class _EachChatMessageState extends State<EachChatMessage> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.response["role"] == "AI" ||
-                        widget.response["role"] == "SYSTEM"
+                widget.response.role == Role.ai ||
+                        widget.response.role == Role.system
                     ? Padding(
                         padding: const EdgeInsets.only(top: 6.0, left: 10.0),
                         child: Icon(
@@ -146,17 +150,17 @@ class _EachChatMessageState extends State<EachChatMessage> {
                             Colors.grey[100],
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: widget.response["role"] == "USER"
+                  child: widget.response.role == Role.user
                       ? Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 13.0,
                             vertical: 10.0,
                           ),
                           child: Text(
-                            widget.response["content"],
+                            widget.response.content,
                           ),
                         )
-                      : widget.response["role"] == "SYSTEM"
+                      : widget.response.role == Role.system
                           ? Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0,
@@ -172,15 +176,15 @@ class _EachChatMessageState extends State<EachChatMessage> {
                                 size: 30,
                               ),
                             )
-                          : widget.response["content"]
+                          : widget.response.content
                                       .toString()
                                       .substring(0, 6) ==
                                   "SYMMDX"
                               ? Markdown(
-                                  data: widget.response["content"]
+                                  data: widget.response.content
                                       .toString()
                                       .substring(
-                                          6, widget.response["content"].length)
+                                          6, widget.response.content.length)
                                       .trim(),
                                   selectable: true,
                                   shrinkWrap: true,
@@ -201,31 +205,31 @@ class _EachChatMessageState extends State<EachChatMessage> {
                                     isRepeatingAnimation: false,
                                     animatedTexts: [
                                       TypewriterAnimatedText(
-                                        widget.response["content"]
+                                        widget.response.content
                                             .toString()
                                             .trim(),
                                         textStyle: TextStyle(
-                                            color: widget.response["content"]
+                                            color: widget.response.content
                                                         .toString()
                                                         .trim()
                                                         .startsWith(
                                                             "GenerativeAIException") ||
-                                                    widget.response["content"]
+                                                    widget.response.content
                                                         .toString()
                                                         .trim()
                                                         .startsWith(
                                                             "ClientException") ||
-                                                    widget.response["content"]
+                                                    widget.response.content
                                                         .toString()
                                                         .trim()
                                                         .startsWith(
                                                             "HandshakeException") ||
-                                                    widget.response["content"]
+                                                    widget.response.content
                                                         .toString()
                                                         .trim()
                                                         .startsWith(
                                                             "API key not valid") ||
-                                                    widget.response["content"]
+                                                    widget.response.content
                                                         .toString()
                                                         .trim()
                                                         .startsWith(
@@ -244,7 +248,7 @@ class _EachChatMessageState extends State<EachChatMessage> {
                                   ),
                                 ),
                 ),
-                widget.response["role"] == "USER"
+                widget.response.role == Role.user
                     ? Padding(
                         padding: const EdgeInsets.only(top: 8.0, right: 10.0),
                         child: Icon(
@@ -260,7 +264,7 @@ class _EachChatMessageState extends State<EachChatMessage> {
               ],
             ),
             // TOOLS
-            widget.response["role"] == "AI" && widget.toolsOn == true
+            widget.response.role == "AI" && widget.toolsOn == true
                 ? Container(
                     padding: const EdgeInsets.only(left: 50.0, bottom: 14.0),
                     child: Row(
@@ -268,7 +272,7 @@ class _EachChatMessageState extends State<EachChatMessage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            readReponse();
+                            readResponse();
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(

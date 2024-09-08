@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AIChatPage(
-                    paperData: "",
+                    paperData: null,
                   ),
                 ),
               );

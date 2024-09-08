@@ -1,11 +1,12 @@
 // ignore_for_file: file_names
 
+import 'package:arxiv/apis/gemini.dart';
 import 'package:arxiv/components/api_settings.dart';
 import 'package:arxiv/components/each_chat_message.dart';
 import 'package:arxiv/components/prompt_suggestions.dart';
+import 'package:arxiv/models/chat_message.dart';
+import 'package:arxiv/models/paper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -13,7 +14,7 @@ import 'package:theme_provider/theme_provider.dart';
 class AIChatPage extends StatefulWidget {
   const AIChatPage({super.key, required this.paperData});
 
-  final dynamic paperData;
+  final Paper? paperData;
 
   @override
   State<AIChatPage> createState() => _AIChatPageState();
@@ -23,11 +24,13 @@ class _AIChatPageState extends State<AIChatPage> {
   TextEditingController userMessageController = TextEditingController();
   ScrollController scrollController = ScrollController();
   var apiKey = "";
-  var aiResponse = "";
-  var systemPrompt = "";
-  List chatList = [];
+  List<ChatMessage> chatList = [];
   var apiKeySettingsOn = false;
   var toolsOn = true;
+
+  final _systemLoadingTrigger = "SYMLOADINGANIMATION";
+
+  late final Gemini model;
 
   var paperPromptSuggestions = [
     "Who wrote this paper?",
@@ -70,40 +73,11 @@ class _AIChatPageState extends State<AIChatPage> {
     userMessageController.clear();
 
     if (message != "") {
-      var userResponseObject = {"role": "USER", "content": message};
-      chatList.add(userResponseObject);
-
-      var systemLoadingObject = {
-        "role": "SYSTEM",
-        "content": "SYMLOADINGANIMATION"
-      };
-      chatList.add(systemLoadingObject);
+      chatList.add(ChatMessage(Role.user, message));
+      chatList.add(ChatMessage(Role.system, _systemLoadingTrigger));
       scrollToTheBottom();
-      var aiResponseObject = {};
 
-      try {
-        var model = GenerativeModel(
-          apiKey: apiKey,
-          model: 'gemini-1.5-flash',
-          systemInstruction: Content.system(systemPrompt),
-          generationConfig: GenerationConfig(
-            temperature: 1,
-            topK: 64,
-            topP: 0.95,
-            maxOutputTokens: 8192,
-            responseMimeType: 'text/plain',
-          ),
-        );
-
-        var chat = model.startChat();
-        var content = Content.text(message);
-
-        var response = await chat.sendMessage(content);
-        aiResponse = response.text?.trim() ?? "";
-        aiResponseObject = {"role": "AI", "content": response.text};
-      } catch (e) {
-        aiResponseObject = {"role": "AI", "content": e.toString()};
-      }
+      ChatMessage aiResponseObject = await model.sendMessage(message);
 
       chatList.removeLast();
       setState(() {});
@@ -119,14 +93,16 @@ class _AIChatPageState extends State<AIChatPage> {
     setState(() {});
   }
 
-  void configAPIKey() async {
+  void configModel() async {
     Box apiBox = await Hive.openBox("apibox");
     apiKey = await apiBox.get("apikey") ?? "";
     await Hive.close();
-    if (apiKey == "") {
-      apiKeySettingsOn = true;
-    } else {
+
+    if (apiKey.isNotEmpty) {
+      model = await Gemini.newModel(apiKey, paper: widget.paperData);
       apiKeySettingsOn = false;
+    } else {
+      apiKeySettingsOn = true;
     }
     setState(() {});
   }
@@ -151,64 +127,11 @@ class _AIChatPageState extends State<AIChatPage> {
     setState(() {});
   }
 
-  void setupModelSystemMessage() async {
-    var paperId = widget.paperData["id"].toString().substring(
-        widget.paperData["id"].lastIndexOf("/") + 1,
-        widget.paperData["id"].length);
-    var paperTitle = widget.paperData["title"]
-        .toString()
-        .replaceAll(RegExp(r'\\n'), '')
-        .replaceAll(RegExp(r'\\ '), '');
-    var paperAuthors = widget.paperData["author"]
-        .toString()
-        .replaceAll("name:", "")
-        .replaceAll(RegExp("[\\[\\]\\{\\}]"), "");
-    var paperPublishedDate =
-        widget.paperData["published"].toString().substring(0, 10);
-    var paperSummary = widget.paperData["summary"]
-        .trim()
-        .replaceAll(RegExp(r'\\n'), ' ')
-        .replaceAll(RegExp(r'\\'), '');
-
-    var substitutes = {
-      'paperId': paperId,
-      'paperTitle': paperTitle,
-      'paperAuthors': paperAuthors,
-      'paperPublishedDate': paperPublishedDate,
-      'paperSummary': paperSummary
-    };
-
-    systemPrompt = await fromTemplateFile(
-        'assets/system_message_templates/model.txt', substitutes);
-  }
-
-  void setupGeneralSystemMessage() async {
-    systemPrompt = await fromTemplateFile(
-        'assets/system_message_templates/general.txt', {});
-  }
-
-  /// Interpolates values to a text read from a file. The format for a placeholder is {{some_name}}.
-  Future<String> fromTemplateFile(
-      String fileName, Map<String, dynamic> substitutes) async {
-    var template = await rootBundle.loadString(fileName);
-    return template.splitMapJoin(RegExp('{{.*?}}'),
-        onMatch: (m) => substitutes[getPlaceholderName(m.group(0))] ?? '');
-  }
-
-  String getPlaceholderName(String? placeholderTemplate) {
-    if (placeholderTemplate == null) return '';
-
-    return placeholderTemplate.substring(2, placeholderTemplate.length - 2);
-  }
-
   @override
   void initState() {
     super.initState();
     getToggleTools();
-    configAPIKey();
-    widget.paperData == ""
-        ? setupGeneralSystemMessage()
-        : setupModelSystemMessage();
+    configModel();
   }
 
   @override
@@ -283,12 +206,12 @@ class _AIChatPageState extends State<AIChatPage> {
                           ),
                           apiKeySettingsOn == true
                               ? APISettings(
-                                  configAPIKey: configAPIKey,
+                                  configAPIKey: configModel,
                                 )
                               : PromptSuggestions(
                                   chatWithAI: chatWithAI,
                                   userMessageController: userMessageController,
-                                  promptSuggestions: widget.paperData == ""
+                                  promptSuggestions: widget.paperData == null
                                       ? generalPromptSuggestions
                                       : paperPromptSuggestions,
                                 ),

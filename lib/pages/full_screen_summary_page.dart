@@ -8,8 +8,6 @@ import 'package:flutter_tex/flutter_tex.dart';
 import 'package:hive/hive.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'package:arxiv/components/each_paper_card.dart';
-
 class FullScreenSummaryPage extends StatefulWidget {
   const FullScreenSummaryPage({
     super.key,
@@ -98,15 +96,7 @@ class _FullScreenSummaryPageState extends State<FullScreenSummaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    String summary = widget.paperData.summary
-        .trim()
-        .replaceAll(RegExp(r'\\n'), ' ')
-        .replaceAll(RegExp(r'\\'), '');
-    if (containsLatex(summary)) {
-      summary = summary.replaceAll(RegExp(r'\$ '), r' \) ');
-      summary = summary.replaceAll(RegExp(r' \$'), r' \( ');
-      summary = summary.replaceAll(r'$', r' \) ');
-    }
+    String summary = widget.paperData.summary;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -205,7 +195,7 @@ class _FullScreenSummaryPageState extends State<FullScreenSummaryPage> {
               left: 20.0,
               right: 20.0,
             ),
-            child: containsLatex(summary)
+            child: Paper.containsLatex(summary)
                 ? TeXView(
                     child: TeXViewDocument(
                       summary,
