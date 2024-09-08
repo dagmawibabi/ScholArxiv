@@ -128,10 +128,14 @@ class _MyAppState extends State<MyApp> {
                     onEnd: () {
                       debugPrint("On End");
                     },
-                    childWidget: SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: Image.asset("assets/icon/icon.png"),
+                    childWidget: Container(
+                      color: ThemeProvider.themeOf(themeContext)
+                          .data
+                          .scaffoldBackgroundColor,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child:
+                          Image.asset("assets/icon/icon-removebg-preview.png"),
                     ),
                     onAnimationEnd: () => debugPrint("On Fade In End"),
                     nextScreen: const HomePage(),
