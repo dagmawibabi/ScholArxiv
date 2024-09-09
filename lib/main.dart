@@ -1,10 +1,8 @@
-import "package:another_flutter_splash_screen/another_flutter_splash_screen.dart";
 import "package:arxiv/models/bookmarks.dart";
 import "package:arxiv/models/paper.dart";
-import "package:arxiv/pages/home_page.dart";
+import "package:arxiv/pages/splash_screen.dart";
 import "package:flutter/material.dart";
 import "package:hive_flutter/hive_flutter.dart";
-import "package:lottie/lottie.dart";
 import 'package:theme_provider/theme_provider.dart';
 
 void main() async {
@@ -27,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ThemeProvider(
       saveThemesOnChange: true,
+      loadThemeOnInit: true,
       themes: [
         AppTheme(
           id: "light_theme",
@@ -121,26 +120,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             initialRoute: "/",
             routes: {
-              "/": (context) => FlutterSplashScreen.fadeIn(
-                    backgroundColor: Colors.white,
-                    onInit: () {
-                      debugPrint("On Init");
-                    },
-                    onEnd: () {
-                      debugPrint("On End");
-                    },
-                    childWidget: Container(
-                      color: ThemeProvider.themeOf(themeContext)
-                          .data
-                          .scaffoldBackgroundColor,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: Lottie.asset(
-                          "assets/animation/ScholArxivLoader.json"),
-                    ),
-                    onAnimationEnd: () => debugPrint("On Fade In End"),
-                    nextScreen: const HomePage(),
-                  )
+              "/": (context) => const SplashScreen(),
             },
           ),
         ),

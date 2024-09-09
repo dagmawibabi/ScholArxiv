@@ -266,7 +266,7 @@ class _AIChatPageState extends State<AIChatPage> {
                             : Colors.black,
                       ),
                       decoration: InputDecoration(
-                        hintText: widget.paperData == ""
+                        hintText: widget.paperData.toString() == ""
                             ? "ask about anything..."
                             : 'ask about the paper...',
                         hintStyle: TextStyle(color: Colors.grey[700]),

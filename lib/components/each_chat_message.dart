@@ -264,7 +264,7 @@ class _EachChatMessageState extends State<EachChatMessage> {
               ],
             ),
             // TOOLS
-            widget.response.role == "AI" && widget.toolsOn == true
+            widget.response.role.toString() == "AI" && widget.toolsOn == true
                 ? Container(
                     padding: const EdgeInsets.only(left: 50.0, bottom: 14.0),
                     child: Row(
