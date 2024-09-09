@@ -2,6 +2,7 @@ import "package:arxiv/models/bookmarks.dart";
 import "package:arxiv/models/paper.dart";
 import "package:arxiv/pages/splash_screen.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:hive_flutter/hive_flutter.dart";
 import 'package:theme_provider/theme_provider.dart';
 
@@ -23,6 +24,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     return ThemeProvider(
       saveThemesOnChange: true,
       loadThemeOnInit: true,
