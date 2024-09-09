@@ -54,7 +54,7 @@ dependencies:
     animated_text_kit: ^4.2.2
     loading_animation_widget: ^1.2.1
     another_flutter_splash_screen: ^1.2.1
-
+    lottie: ^3.1.2
 dev_dependencies:
     flutter_test:
         sdk: flutter
@@ -101,6 +101,7 @@ flutter:
     assets:
         - assets/system_message_templates/
         - assets/icon/
+        - assets/animation/
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
