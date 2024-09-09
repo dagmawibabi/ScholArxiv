@@ -4,6 +4,7 @@ import "package:arxiv/models/paper.dart";
 import "package:arxiv/pages/home_page.dart";
 import "package:flutter/material.dart";
 import "package:hive_flutter/hive_flutter.dart";
+import "package:lottie/lottie.dart";
 import 'package:theme_provider/theme_provider.dart';
 
 void main() async {
@@ -134,8 +135,8 @@ class _MyAppState extends State<MyApp> {
                           .scaffoldBackgroundColor,
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      child:
-                          Image.asset("assets/icon/icon-removebg-preview.png"),
+                      child: Lottie.asset(
+                          "assets/animation/ScholArxivLoader.json"),
                     ),
                     onAnimationEnd: () => debugPrint("On Fade In End"),
                     nextScreen: const HomePage(),
