@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   int maxContent = 30;
   int paginationGap = 30;
   var pdfBaseURL = "https://arxiv.org/pdf";
+  bool sortOrderNewest = true;
 
   var isHomeScreenLoading = true;
   TextEditingController searchTermController = TextEditingController();
@@ -56,6 +57,29 @@ class _HomePageState extends State<HomePage> {
 
     isHomeScreenLoading = false;
     setState(() {});
+  }
+
+  Future<void> toggleSortOrder() async {
+    setState(() {
+      sortOrderNewest = !sortOrderNewest; // Toggle the sorting order
+    });
+    await sortPapersByDate(); // Apply the sorting after toggling
+  }
+
+  Future<void> sortPapersByDate() async {
+    if (data.isNotEmpty) {
+      // Sort papers based on publishedAt date
+      data.sort((a, b) {
+        // Parsing the publishedAt date strings into DateTime objects
+        DateTime dateA = DateTime.parse(a.publishedAt);
+        DateTime dateB = DateTime.parse(b.publishedAt);
+
+        return sortOrderNewest
+            ? dateB.compareTo(dateA)
+            : dateA.compareTo(dateB);
+      });
+      setState(() {});
+    }
   }
 
   Future<List<Paper>> suggestedPapers() async {
@@ -156,6 +180,19 @@ class _HomePageState extends State<HomePage> {
               Icons.bookmark_border_outlined,
             ),
           ),
+          IconButton(
+            onPressed: toggleSortOrder, // Call the toggleSortOrder function
+            icon: Icon(
+              sortOrderNewest
+                  ? Ionicons.arrow_down // Use down arrow for "Latest First"
+                  : Ionicons.arrow_up, // Use up arrow for "Oldest First"
+              size: 24.0,
+            ),
+            tooltip: sortOrderNewest
+                ? 'Oldest First' // Tooltip for sorting by newest first
+                : 'Latest First', // Tooltip for sorting by oldest first
+          ),
+
           // CHANGE THEME
           IconButton(
             onPressed: () {
@@ -186,6 +223,7 @@ class _HomePageState extends State<HomePage> {
               Icons.auto_awesome_outlined,
             ),
           ),
+
           const SizedBox(width: 10.0),
         ],
       ),
@@ -196,7 +234,6 @@ class _HomePageState extends State<HomePage> {
         animSpeedFactor: 2.0,
         child: ListView(
           children: [
-            // Search Box
             SearchBox(
               searchTermController: searchTermController,
               searchFunction: search,
