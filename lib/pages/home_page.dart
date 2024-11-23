@@ -180,18 +180,6 @@ class _HomePageState extends State<HomePage> {
               Icons.bookmark_border_outlined,
             ),
           ),
-          IconButton(
-            onPressed: toggleSortOrder, // Call the toggleSortOrder function
-            icon: Icon(
-              sortOrderNewest
-                  ? Ionicons.arrow_down // Use down arrow for "Latest First"
-                  : Ionicons.arrow_up, // Use up arrow for "Oldest First"
-              size: 24.0,
-            ),
-            tooltip: sortOrderNewest
-                ? 'Oldest First' // Tooltip for sorting by newest first
-                : 'Latest First', // Tooltip for sorting by oldest first
-          ),
 
           // CHANGE THEME
           IconButton(
@@ -235,9 +223,10 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             SearchBox(
-              searchTermController: searchTermController,
-              searchFunction: search,
-            ),
+                searchTermController: searchTermController,
+                searchFunction: search,
+                toggleSortOrder: toggleSortOrder,
+                sortOrderNewest: sortOrderNewest),
 
             // Data or Loading
             isHomeScreenLoading == true
