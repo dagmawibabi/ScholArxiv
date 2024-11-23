@@ -7,10 +7,14 @@ class SearchBox extends StatefulWidget {
     super.key,
     required this.searchTermController,
     required this.searchFunction,
+    required this.toggleSortOrder,
+    required this.sortOrderNewest,
   });
 
   final TextEditingController searchTermController;
   final Function searchFunction;
+  final Function toggleSortOrder;
+  final bool sortOrderNewest;
 
   @override
   State<SearchBox> createState() => _SearchBoxState();
@@ -99,6 +103,15 @@ class _SearchBoxState extends State<SearchBox> {
                   widget.searchFunction(resetPagination: true);
                 },
               ),
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              widget.toggleSortOrder();
+            },
+            icon: const Icon(
+              Icons.sort,
+              color: Colors.grey,
             ),
           ),
           IconButton(
