@@ -31,7 +31,6 @@ class _SearchBoxState extends State<SearchBox> {
 
   @override
   void dispose() {
-    widget.searchTermController.dispose();
     super.dispose();
   }
 
