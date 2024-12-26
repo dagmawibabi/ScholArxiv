@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:photo_view/photo_view.dart';
 
 class HowToUsePage extends StatelessWidget {
   const HowToUsePage({Key? key}) : super(key: key);
@@ -24,30 +25,29 @@ class HowToUsePage extends StatelessWidget {
             'assets/banners/ScholArxiv.png',
             'Use the search bar at the top to find research papers. Enter keywords or author names.',
             isDarkTheme,
+            context,
           ),
           _buildSection(
             'View Details',
             'assets/banners/ScholArxiv2.png',
             'Tap on any paper to view its details, abstract, and download options.',
             isDarkTheme,
+            context,
           ),
-          _buildSection(
-            'Bookmark Papers',
-            'assets/banners/ScholArxiv3.png',
-            'Save papers for later by tapping the bookmark icon.',
-            isDarkTheme,
-          ),
+        
           _buildSection(
             'Change Theme',
-            'assets/banners/ScholArxiv4.png',
+            'assets/banners/ScholArxiv3.png',
             'Toggle between light and dark themes using the theme icon in the app bar.',
             isDarkTheme,
+            context,
           ),
           _buildSection(
             'AI Chat',
-            'assets/banners/ScholArxiv5.png',
+            'assets/banners/ScholArxiv6.png',
             'Discuss papers with AI by tapping the AI chat icon.',
             isDarkTheme,
+            context,
           ),
           const SizedBox(height: 20),
           Text(
@@ -63,7 +63,7 @@ class HowToUsePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(String title, String imagePath, String description, bool isDarkTheme) {
+  Widget _buildSection(String title, String imagePath, String description, bool isDarkTheme, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
@@ -73,12 +73,15 @@ class HowToUsePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.asset(
-              imagePath,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () => _showFullScreenImage(context, imagePath),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.asset(
+                imagePath,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Padding(
@@ -106,6 +109,25 @@ class HowToUsePage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showFullScreenImage(BuildContext context, String imagePath) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.black,
+          body: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Center(
+              child: PhotoView(
+                imageProvider: AssetImage(imagePath),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
