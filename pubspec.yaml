@@ -102,6 +102,16 @@ flutter:
         - assets/system_message_templates/
         - assets/icon/
         - assets/animation/
+        - assets/banners/ScholArxiv.png
+        - assets/banners/ScholArxiv2.png
+        - assets/banners/ScholArxiv3.png
+        - assets/banners/ScholArxiv4.png
+        - assets/banners/ScholArxiv5.png
+        - assets/banners/ScholArxiv6.png
+        - assets/banners/ScholArxiv7.png
+
+
+        
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
