@@ -49,6 +49,13 @@ class HowToUsePage extends StatelessWidget {
             isDarkTheme,
             context,
           ),
+            _buildSection(
+            'API configuration',
+            'assets/banners/ScholArxiv6.png',
+            'Enter your API key in the settings page to enable AI chat.',
+            isDarkTheme,
+            context,
+          ),
           const SizedBox(height: 20),
           Text(
             'Need more help? Contact us at support@scholrxiv.com',
