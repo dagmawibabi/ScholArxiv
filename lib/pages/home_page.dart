@@ -6,7 +6,6 @@ import 'package:arxiv/components/search_box.dart';
 import 'package:arxiv/models/paper.dart';
 import 'package:arxiv/pages/ai_chat_page.dart';
 import 'package:arxiv/pages/bookmarks_page.dart';
-import 'package:arxiv/pages/how_to_use.dart';
 import 'package:arxiv/pages/pdf_viewer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -170,32 +169,6 @@ class _HomePageState extends State<HomePage> {
           "ScholArxiv",
         ),
         actions: [
-
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HowToUsePage(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.help_outline,
-            ),
-          ),
-
-
-
-
-
-
-
-
-
-
-
-
           // BOOKMARKS
           IconButton(
             onPressed: () {
