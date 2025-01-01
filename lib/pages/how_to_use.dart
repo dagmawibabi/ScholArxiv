@@ -21,56 +21,48 @@ class HowToUsePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         children: [
           _buildSection(
-            'Search Papers',
+            'Search, Download and Bookmark Papers',
             'assets/banners/ScholArxiv.png',
-            'Use the search bar at the top to find research papers. Enter keywords or author names.',
+            'Use the search bar at the top to find research papers. Enter keywords or author names. Once you find what you like you can bookmark it to read later or download to save the pdf.',
             isDarkTheme,
             context,
           ),
           _buildSection(
-            'View Details',
+            'View and Listen to Summaries',
             'assets/banners/ScholArxiv2.png',
-            'Tap on any paper to view its details, abstract, and download options.',
-            isDarkTheme,
-            context,
-          ),
-        
-          _buildSection(
-            'Change Theme',
-            'assets/banners/ScholArxiv3.png',
-            'Toggle between light and dark themes using the theme icon in the app bar.',
+            'Tap the summary button on any paper to view its summary and click on the volume icon to listen to it. You can also adjust the speed of the audio.',
             isDarkTheme,
             context,
           ),
           _buildSection(
             'AI Chat',
-            'assets/banners/ScholArxiv6.png',
-            'Discuss papers with AI by tapping the AI chat icon.',
+            'assets/banners/ScholArxiv7.png',
+            'Discuss papers with AI by tapping the AI icon or click on the AI icon on the app bar to have a general conversation.',
             isDarkTheme,
             context,
           ),
-            _buildSection(
+          _buildSection(
             'API configuration',
             'assets/banners/ScholArxiv6.png',
-            'Enter your API key in the settings page to enable AI chat.',
+            "You can grab your own Gemini API key in the settings page to enable AI chat. Click on the 'GET API KEY' button to get your key.",
             isDarkTheme,
             context,
           ),
-          const SizedBox(height: 20),
-          Text(
-            'Need more help? Contact us at support@scholrxiv.com',
-            style: TextStyle(
-              color: isDarkTheme ? Colors.grey[400] : Colors.grey[600],
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center,
+          _buildSection(
+            'Change Theme',
+            'assets/banners/ScholArxiv3.png',
+            'Toggle between light, dark and mixed themes using the theme icon in the app bar.',
+            isDarkTheme,
+            context,
           ),
+          const SizedBox(height: 50),
         ],
       ),
     );
   }
 
-  Widget _buildSection(String title, String imagePath, String description, bool isDarkTheme, BuildContext context) {
+  Widget _buildSection(String title, String imagePath, String description,
+      bool isDarkTheme, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
@@ -83,7 +75,8 @@ class HowToUsePage extends StatelessWidget {
           GestureDetector(
             onTap: () => _showFullScreenImage(context, imagePath),
             child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.asset(
                 imagePath,
                 width: double.infinity,
@@ -139,4 +132,3 @@ class HowToUsePage extends StatelessWidget {
     );
   }
 }
-

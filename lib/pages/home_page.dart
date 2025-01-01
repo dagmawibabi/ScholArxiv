@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
           "ScholArxiv",
         ),
         actions: [
-
+          // HELP
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -184,17 +184,6 @@ class _HomePageState extends State<HomePage> {
               Icons.help_outline,
             ),
           ),
-
-
-
-
-
-
-
-
-
-
-
 
           // BOOKMARKS
           IconButton(
